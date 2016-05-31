@@ -6,7 +6,10 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
+    "layer-websdk": "^1.0.4",
+    "parse": "^1.8.5",
     "react": "^15.1.0",
-    "react-native": "^0.27.0-rc2"
+    "react-native": "^0.27.0-rc2",
+    "react-native-tabs": "^1.0.7"
   }
 }
