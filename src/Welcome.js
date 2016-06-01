@@ -23,6 +23,12 @@ class Welcome extends Component {
             <Text style={styles.dryvewayHeading}>DryveWay</Text>
             <Button text="Log in" onPress={this.onLoginPress.bind(this)}/>
             <Button text="Sign up" onPress={this.onSignupPress.bind(this)}/>
+            <Text style={styles.explanationText}>
+            DryveWay is a utility app that helps people reach out to the
+            owner of cars anonymously in cases such as car parked in a drive
+            way or car fully charged but still plugged-in to the charger or
+            car swiped accidently.
+            </Text>
       </View>
     );
   }
@@ -46,11 +52,18 @@ const styles = StyleSheet.create({
     fontFamily: 'Helvetica',
     fontSize: 40,
     fontWeight: 'bold',
-    paddingBottom: 200,
+    paddingBottom: 150,
   },
   welcome: {
     fontFamily: 'Helvetica',
     fontSize: 20,
+  },
+  explanationText: {
+    fontFamily: 'Helvetica',
+    width: 200,
+    height: 200,
+    fontSize: 15,
+    marginTop: 50
   },
 });
 

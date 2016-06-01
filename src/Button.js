@@ -34,18 +34,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-    paddingBottom: 10,
-    paddingTop: 10,
+    marginTop: 10,
+    padding: 5,
+    borderWidth: 1,
+    borderRadius: 10,
   },
   textContainer: {
     fontFamily: 'Helvetica',
     justifyContent: 'center',
+    alignSelf: 'center',
     textAlign: 'center',
+    flex:1,
     fontSize: 20,
-    borderWidth: 1,
-    borderRadius: 10,
-    width: 120,
-    height: 40,
   }
 });
 

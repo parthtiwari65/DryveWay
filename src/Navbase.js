@@ -9,12 +9,14 @@ var Welcome = require('./Welcome');
 var Signin = require('./Signin');
 var Signup = require('./Signup');
 var Main = require('./Main');
+var CarReg = require('./CarReg');
 var Parse = require('parse/react-native');
 
 var ROUTES = {
   'welcome': Welcome,
   'signin': Signin,
   'signup': Signup,
+  'carReg': CarReg,
   'main': Main,
 };
 

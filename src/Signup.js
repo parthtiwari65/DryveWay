@@ -14,6 +14,7 @@ class Signup extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      fullName: "",
       username: "",
       password: "",
       confirmPassword: "",
@@ -26,6 +27,11 @@ class Signup extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.titleContainer}> Please register here </Text>
+        <Text style={styles.titleContainer}> Name: </Text>
+        <TextInput
+          style={styles.textInputContainer}
+          onChangeText={(text) => this.setState({name: text})}
+          value={this.state.name}/>
         <Text style={styles.titleContainer}> Username: </Text>
         <TextInput
           style={styles.textInputContainer}
@@ -45,14 +51,14 @@ class Signup extends Component {
             secureTextEntry={true}/>
         <Text>{this.state.errorMessage}</Text>
         <Button text="Submit" onPress={this.onSubmitPress.bind(this)}/>
-        <Button text="Go back"
+        <Button text="I have an account"
                   onPress={this.onAlreadyPress.bind(this)}/>
-
       </View>
     );
   }
 
   onSubmitPress() {
+    this.setState({errorMessage: "Loading..."})
     if(this.state.password != this.state.confirmPassword) {
       this.setState({errorMessage: "Sorry, passwords don't match"})
       return
@@ -60,11 +66,12 @@ class Signup extends Component {
     var user = new Parse.User();
     user.set("username", this.state.username);
     user.set("password", this.state.password);
+    user.set("name", this.state.name);
 
     user.signUp(null, {
       success: (user) => {
-        alert("Success");
-        this.props.navigator.push({name: 'main'});
+        this.setState({errorMessage: ""});
+        this.props.navigator.push({name: 'carReg'});
       },
       error: (user, error) => {
         this.setState({errorMessage: error.message}).bind(this);
