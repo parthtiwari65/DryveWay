@@ -35,7 +35,7 @@ class Navbase extends Component {
     return (
       <Navigator
         style={styles.container}
-        initialRoute={{name:'welcome'}}
+        initialRoute={{name:'carReg'}}
         renderScene={this.renderScene.bind(this)}/>
     );
   }

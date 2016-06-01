@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Helvetica',
     fontSize: 40,
     fontWeight: 'bold',
-    paddingBottom: 150,
+    paddingBottom: 100,
   },
   welcome: {
     fontFamily: 'Helvetica',

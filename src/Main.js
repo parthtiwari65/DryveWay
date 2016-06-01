@@ -38,9 +38,9 @@ class Main extends Component {
           selectedStyle={{color:'black'}}
           onSelect={el=>this.setState({page:el.props.name})}
         >
-            <Text name={Contact}>Contact</Text>
-            <Text name={Messages}>Messages</Text>
-            <Text name={Profile}>Profile</Text>
+            <Text style={styles.tabbarText} name={Contact}>Contact</Text>
+            <Text style={styles.tabbarText} name={Messages}>Messages</Text>
+            <Text style={styles.tabbarText} name={Profile}>Profile</Text>
         </Tabs>
       </View>
     );
@@ -76,6 +76,9 @@ const styles = StyleSheet.create({
     height: 64,
     borderTopColor: 'blue',
     borderTopWidth: 2
+  },
+  tabbarText: {
+    fontSize: 20
   },
 });
 

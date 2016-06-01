@@ -39,17 +39,24 @@ class CarReg extends Component {
           style={styles.textInputContainer}
           onChangeText={(text) => this.setState({carState1: text})}
           value={this.state.carState1}/>
+        <View style={styles.addCarView}>
+        <Text>placeholder</Text>
+        </View>
         <Text>{this.state.errorMessage}</Text>
-        <Button text="Add car" onPress={this.onAddCarPress.bind(this)}/>
+        <Button text="Add another car" onPress={this.onAddCarPress.bind(this)}/>
         <Button text="Submit" onPress={this.onSubmitPress.bind(this)}/>
+        <Button text="I don't have a car" onPress={this.onNoCarPress.bind(this)}/>
       </View>
     );
+  }
+  onAddCarPress() {
+    return (<Text>placeholder</Text>);
   }
   onSubmitPress() {
     this.props.navigator.push({name: 'main'});
   }
-  onAddCarPress() {
-
+  onNoCarPress() {
+    this.props.navigator.push({name: 'main'});
   }
 }
 
@@ -59,6 +66,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+  },
+  addCarView: {
+    backgroundColor: '#F5FCFF',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   titleContainer: {
     fontSize: 20,
