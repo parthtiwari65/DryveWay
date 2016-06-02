@@ -18,7 +18,8 @@ class CarReg extends Component {
       carState1: "",
       carNumber2: "",
       carState2: "",
-      errorMessage: ""
+      errorMessage: "",
+      car2Displayed: false
     };
   }
 
@@ -28,7 +29,7 @@ class CarReg extends Component {
       <View style={styles.container}>
         <Text
           style={[styles.titleContainer, {marginBottom: 30}]}>
-          Please register your cars here </Text>
+          Please register your cars, you can add up-to 2 cars </Text>
         <Text style={styles.titleContainer}> License plate number: </Text>
         <TextInput
           style={styles.textInputContainer}
@@ -40,7 +41,14 @@ class CarReg extends Component {
           onChangeText={(text) => this.setState({carState1: text})}
           value={this.state.carState1}/>
         <View style={styles.addCarView}>
-        <Text>placeholder</Text>
+                <Text style={styles.titleContainer}>
+                {((this.state.car2Displayed) ? "Add 2nd car" : "")}</Text>
+                <Text style={styles.titleContainer}>
+                {((this.state.car2Displayed) ? "License plate number: " : "")}</Text>
+                <Text style={styles.titleContainer}>
+                {((this.state.car2Displayed) ? "State: " : "")}</Text>
+                <Text style={styles.titleContainer}>
+                {((this.state.car2Displayed) ? "State: " : "")}</Text>
         </View>
         <Text>{this.state.errorMessage}</Text>
         <Button text="Add another car" onPress={this.onAddCarPress.bind(this)}/>
@@ -50,7 +58,7 @@ class CarReg extends Component {
     );
   }
   onAddCarPress() {
-    return (<Text>placeholder</Text>);
+    this.setState({car2Displayed: true});
   }
   onSubmitPress() {
     this.props.navigator.push({name: 'main'});
