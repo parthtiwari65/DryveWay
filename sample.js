@@ -19,31 +19,12 @@ class CarReg extends Component {
       carNumber2: "",
       carState2: "",
       errorMessage: "",
-      carEntry: false,
+      carEntry: <View/>,
     };
   }
 
   render() {
     const { page } = this.state;
-    var carFields =<View/>;
-    if(this.state.carEntry) {
-        carFields =<View style={styles.addCarView}>
-                      <Text style={styles.titleContainer}> License plate number:</Text>
-                        <TextInput
-                          style={styles.textInputContainer}
-                          onChangeText={(text) => this.setState({carNumber2: text})}
-                          value={this.state.carNumber2}/>
-                      <Text style={styles.titleContainer}> State: </Text>
-                        <TextInput
-                          style={styles.textInputContainer}
-                          onChangeText={(text) => this.setState({carState2: text})}
-                          value={this.state.carState2}/>
-                    </View>;
-      } else {
-        carFields = <View/>;
-      }
-
-
     return (
       <View style={styles.container}>
         <Text
@@ -59,7 +40,7 @@ class CarReg extends Component {
           style={styles.textInputContainer}
           onChangeText={(text) => this.setState({carState1: text})}
           value={this.state.carState1}/>
-        {carFields}
+        {this.state.carEntry}
         <Text>{this.state.errorMessage}</Text>
         <Button text="Add another car" onPress={this.onAddCarPress.bind(this)}/>
         <Button text="Submit" onPress={this.onSubmitPress.bind(this)}/>
@@ -68,7 +49,20 @@ class CarReg extends Component {
     );
   }
   onAddCarPress() {
-    this.setState({carEntry: true})
+    this.setState({carEntry:
+      <View style={styles.addCarView}>
+          <Text style={styles.titleContainer}> License plate number: </Text>
+          <TextInput
+            style={styles.textInputContainer}
+            onChangeText={(text) => this.setState({carNumber2: text})}
+            value={this.state.carNumber2}/>
+          <Text style={styles.titleContainer}> State: </Text>
+          <TextInput
+            style={styles.textInputContainer}
+            onChangeText={(text) => this.setState({carState2: text})}
+            value={this.state.carState2}/>
+      </View>
+    })
   }
   onSubmitPress() {
     this.props.navigator.push({name: 'main'});
