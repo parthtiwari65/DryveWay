@@ -16,8 +16,10 @@ class CarReg extends Component {
     this.state = {
       carNumber1: "",
       carState1: "",
+      carCountry1: "",
       carNumber2: "",
       carState2: "",
+      carCountry1: "",
       errorMessage: "",
       carEntry: false,
     };
@@ -38,6 +40,10 @@ class CarReg extends Component {
                           style={styles.textInputContainer}
                           onChangeText={(text) => this.setState({carState2: text})}
                           value={this.state.carState2}/>
+                          <TextInput
+                              style={styles.textInputContainer}
+                              onChangeText={(text) => this.setState({carCountry2: text})}
+                              value={this.state.carCountry2}/>
                     </View>;
       } else {
         carFields = <View/>;
@@ -48,7 +54,7 @@ class CarReg extends Component {
       <View style={styles.container}>
         <Text
           style={[styles.titleContainer, {marginBottom: 30}]}>
-          Please register your cars, you can add up-to 2 cars </Text>
+          Please register your vehicle, you can add up-to 2 cars </Text>
         <Text style={styles.titleContainer}> License plate number: </Text>
         <TextInput
           style={styles.textInputContainer}
@@ -59,11 +65,15 @@ class CarReg extends Component {
           style={styles.textInputContainer}
           onChangeText={(text) => this.setState({carState1: text})}
           value={this.state.carState1}/>
+        <TextInput
+            style={styles.textInputContainer}
+            onChangeText={(text) => this.setState({carCountry1: text})}
+            value={this.state.carCountry1}/>
         {carFields}
         <Text>{this.state.errorMessage}</Text>
-        <Button text="Add another car" onPress={this.onAddCarPress.bind(this)}/>
+        <Button text="Add another vehicle" onPress={this.onAddCarPress.bind(this)}/>
         <Button text="Submit" onPress={this.onSubmitPress.bind(this)}/>
-        <Button text="I don't have a car" onPress={this.onNoCarPress.bind(this)}/>
+        <Button text="I don't have a vehicle" onPress={this.onNoCarPress.bind(this)}/>
       </View>
     );
   }
@@ -71,7 +81,63 @@ class CarReg extends Component {
     this.setState({carEntry: true})
   }
   onSubmitPress() {
-    this.props.navigator.push({name: 'main'});
+    if(this.state.carEntry) {
+      var Vehicle = Parse.Object.extend("Vehicle");
+      var vehicle = new Vehicle();
+      vehicle.set("licensePlate", this.state.carNumber1);
+      vehicle.set("registeredState", this.state.carState1);
+      vehicle.set("registeredCountry", this.state.carCountry1);
+
+      vehicle.save(null, {
+        success: (gameScore) => {
+          // Execute any logic that should take place after the object is saved.
+          alert('Car registered with objectId: ' + vehicle.id);
+          this.props.navigator.push({name: 'main'});
+        },
+        error: (gameScore, error) => {
+          // Execute any logic that should take place if the save fails.
+          // error is a Parse.Error with an error code and message.
+          alert('Failed to create new object, with error code: ' + error.message);
+        }
+      });
+    }
+    else {
+      var Vehicle = Parse.Object.extend("Vehicle");
+      var vehicle = new Vehicle();
+      vehicle.set("licensePlate", this.state.carNumber1);
+      vehicle.set("registeredState", this.state.carState1);
+      vehicle.set("registeredCountry", this.state.carCountry1);
+
+      vehicle.save(null, {
+        success: (gameScore) => {
+        },
+        error: (gameScore, error) => {
+          // Execute any logic that should take place if the save fails.
+          // error is a Parse.Error with an error code and message.
+          alert('Failed to create new object, with error code: ' + error.message);
+        }
+      });
+
+      var Vehicle = Parse.Object.extend("Vehicle");
+      var vehicle = new Vehicle();
+      vehicle.set("licensePlate", this.state.carNumber2);
+      vehicle.set("registeredState", this.state.carState2);
+      vehicle.set("registeredCountry", this.state.carCountry2);
+
+      vehicle.save(null, {
+        success: (gameScore) => {
+          // Execute any logic that should take place after the object is saved.
+          this.props.navigator.push({name: 'main'});
+        },
+        error: (gameScore, error) => {
+          // Execute any logic that should take place if the save fails.
+          // error is a Parse.Error with an error code and message.
+          alert('Failed to create new object, with error code: ' + error.message);
+        }
+      });
+
+    }
+
   }
   onNoCarPress() {
     this.props.navigator.push({name: 'main'});
