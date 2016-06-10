@@ -13,32 +13,33 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "default",
+      username: "default",
     };
   }
 
   render() {
     const { page } = this.state;
+    this.pullUserInfo.bind(this);
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Hi!
+        <Text style={styles.titleContainer}>
+          Hi! {this.state.username}
         </Text>
-        <Text> {this.pullUserInfo.bind(this)} </Text>
-        <Text> {this.state.name} </Text>
-        <Text style={styles.welcome}>
+        <Text style={styles.titleContainer}>
           Your registered cars are,
         </Text>
         <Button text="Refresh" onPress={this.pullUserInfo.bind(this)}/>
       </View>
     );
   }
-  pullUserInfo(){
+  pullUserInfo() {
+
     var currentUser = Parse.User.current();
     var test = JSON.stringify(currentUser);
     var userinfo = eval ("(" + test + ")");
-    this.setState({name: userinfo.name});
-    return userinfo.name;
+    this.setState({name: userinfo.username});
+    alert(test);
+    return userinfo.username;
   }
 }
 
@@ -48,6 +49,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+  },
+  titleContainer: {
+    fontSize: 20,
+    fontFamily: 'Helvetica',
   },
 });
 

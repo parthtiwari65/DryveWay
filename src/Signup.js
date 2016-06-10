@@ -14,7 +14,7 @@ class Signup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fullName: "",
+      email: "",
       username: "",
       password: "",
       confirmPassword: "",
@@ -27,11 +27,11 @@ class Signup extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.titleContainer}> Please register here </Text>
-        <Text style={styles.titleContainer}> Name: </Text>
+        <Text style={styles.titleContainer}> Email: </Text>
         <TextInput
           style={styles.textInputContainer}
-          onChangeText={(text) => this.setState({name: text})}
-          value={this.state.name}/>
+          onChangeText={(text) => this.setState({email: text})}
+          value={this.state.email}/>
         <Text style={styles.titleContainer}> Username: </Text>
         <TextInput
           style={styles.textInputContainer}
@@ -49,7 +49,7 @@ class Signup extends Component {
             onChangeText={(text) => this.setState({confirmPassword: text})}
             value={this.state.confirmPassword}
             secureTextEntry={true}/>
-        <Text>{this.state.errorMessage}</Text>
+        <Text style={styles.errorColor}>{this.state.errorMessage}</Text>
         <Button text="Submit" onPress={this.onSubmitPress.bind(this)}/>
         <Button text="I have an account"
                   onPress={this.onAlreadyPress.bind(this)}/>
@@ -66,7 +66,7 @@ class Signup extends Component {
     var user = new Parse.User();
     user.set("username", this.state.username);
     user.set("password", this.state.password);
-    user.set("name", this.state.name);
+    user.set("email", this.state.email);
 
     user.signUp(null, {
       success: (user) => {
@@ -105,6 +105,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 10,
     marginTop: 10,
+  },
+  errorColor: {
+    color: 'red',
+    fontFamily: 'Helvetica',
   },
 });
 
