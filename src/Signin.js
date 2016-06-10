@@ -45,17 +45,12 @@ class Signin extends Component {
   }
   onLoginPress(){
     this.setState({errorMessage: "Loading..."})
-    console.log('reach login')
     Parse.User.logIn(this.state.username, this.state.password, {
       success: (user) => {
-        // Do stuff after successful login.
-        console.log('reach success')
         this.setState({errorMessage: ""})
         this.props.navigator.push({name: 'main'});
       },
       error: (user, error) => {
-        // The login failed. Check error to see why.
-        console.log('reach error');
         this.setState({errorMessage: error.message});
       }
     });

@@ -20,7 +20,15 @@ class CarReg extends Component {
       carState2: "",
       errorMessage: "",
       carEntry: false,
+      userEmail: "",
     };
+  }
+
+  componentWillMount() {
+    var currentUser = Parse.User.current();
+    var test = JSON.stringify(currentUser);
+    var userinfo = eval ("(" + test + ")");
+    this.setState({userEmail: userinfo.email});
   }
 
   render() {
@@ -44,7 +52,6 @@ class CarReg extends Component {
       } else {
         carFields = <View/>;
       }
-
 
     return (
       <View style={styles.container}>
@@ -76,8 +83,8 @@ class CarReg extends Component {
     else {
       this.setState({carEntry: true});
     }
-
   }
+
   onSubmitPress() {
     this.setState({errorMessage: "Loading..."});
     if(this.state.carEntry) {
@@ -86,6 +93,7 @@ class CarReg extends Component {
       var vehicle = new Vehicle();
       vehicle.set("licensePlate", this.state.carNumber1);
       vehicle.set("registeredState", this.state.carState1);
+      vehicle.set("userEmail", this.state.userEmail);
       vehicle.save(null, {
         success: (gameScore) => {
         },
@@ -97,7 +105,7 @@ class CarReg extends Component {
       var vehicle = new Vehicle();
       vehicle.set("licensePlate", this.state.carNumber2);
       vehicle.set("registeredState", this.state.carState2);
-
+      vehicle.set("userEmail", this.state.userEmail);
       vehicle.save(null, {
         success: (gameScore) => {
           this.props.navigator.push({name: 'main'});
@@ -112,6 +120,7 @@ class CarReg extends Component {
             var vehicle = new Vehicle();
             vehicle.set("licensePlate", this.state.carNumber1);
             vehicle.set("registeredState", this.state.carState1);
+            vehicle.set("userEmail", this.state.userEmail);
             vehicle.save(null, {
               success: (gameScore) => {
                 this.props.navigator.push({name: 'main'});
