@@ -10,6 +10,7 @@ var Signin = require('./Signin');
 var Signup = require('./Signup');
 var Main = require('./Main');
 var CarReg = require('./CarReg');
+var UpdateVehicles = require('./UpdateVehicles');
 var Parse = require('parse/react-native');
 
 var ROUTES = {
@@ -18,6 +19,7 @@ var ROUTES = {
   'signup': Signup,
   'carReg': CarReg,
   'main': Main,
+  'updateVehicles': UpdateVehicles,
 };
 
 class Navbase extends Component {

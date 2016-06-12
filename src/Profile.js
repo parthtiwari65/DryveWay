@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  View
+  View,
 } from 'react-native';
 var Parse = require('parse/react-native');
 var Button = require('./Button');
@@ -22,26 +22,26 @@ class Profile extends Component {
 
   componentWillMount() {
     var currentUser = Parse.User.current();
-    var test = JSON.stringify(currentUser);
-    var userinfo = eval ("(" + test + ")");
+    var userJSON = JSON.stringify(currentUser);
+    var userinfo = eval ("(" + userJSON + ")");
     this.setState({username: userinfo.username});
     this.setState({userEmail: userinfo.email});
     var vehicle = Parse.Object.extend("Vehicle");
     var query = new Parse.Query(vehicle);
     query.equalTo("userEmail", userinfo.email);
     query.find({
-      success: function(results) {
-        alert("Successfully retrieved " + results.length + " cars.");
-        // Do something with the returned Parse.Object values
+      success: (results) => {
         for (var i = 0; i < results.length; i++) {
           var object = results[i];
           console.log(object.id + ' - ' + object.get('licensePlate'));
-          //this.setState({licensePlate[i]: object.get('licensePlate')});
-          //this.setState({registeredState[i]: object.get('registeredState')});
+          this.setState({
+                 licensePlate: this.state.licensePlate.concat([object.get('licensePlate')]),
+                 registeredState: this.state.registeredState.concat([object.get('registeredState')]),
+            });
         }
       },
-      error: function(error) {
-        alert("Error: " + error.code + " " + error.message);
+      error: (error) => {
+        console.log("Error: " + error.code + " " + error.message);
       }
     });
   }
@@ -53,20 +53,21 @@ class Profile extends Component {
         <Text style={styles.titleContainer}>
           Hi! {this.state.username}
         </Text>
-        <Text>{this.pullUserInfo.bind(this)}</Text>
         <Text style={styles.titleContainer}>
-          Your registered cars are,
+          Your registered vehicles are,
         </Text>
-        <Button text="Refresh" onPress={this.pullUserInfo.bind(this)}/>
+        {this.displayCars()}
+        <Button text="Edit vehicles" onPress={this.updateVehicleInfo.bind(this)}/>
       </View>
     );
   }
-  pullUserInfo() {
-    var currentUser = Parse.User.current();
-    var test = JSON.stringify(currentUser);
-    var userinfo = eval ("(" + test + ")");
-    this.setState({username: userinfo.username});
-    return userinfo.username;
+  displayCars() {
+    return this.state.licensePlate.map((str,index) => {
+      return (<View><Text style={styles.titleContainer}>Vehicle {index+1}: {str}</Text></View>);
+    })
+  }
+  updateVehicleInfo() {
+    this.props.navigator.push({name: 'CarReg'});
   }
 }
 
@@ -80,6 +81,7 @@ const styles = StyleSheet.create({
   titleContainer: {
     fontSize: 20,
     fontFamily: 'Helvetica',
+    marginBottom: 20,
   },
 });
 

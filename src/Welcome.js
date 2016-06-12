@@ -33,10 +33,10 @@ class Welcome extends Component {
     );
   }
 
-  onLoginPress(){
+  onLoginPress() {
     this.props.navigator.push({name: 'signin'});
   }
-  onSignupPress(){
+  onSignupPress() {
     this.props.navigator.push({name: 'signup'});
   }
 }

@@ -13,17 +13,16 @@ import {
 } from 'react-native';
 import Tabs from 'react-native-tabs';
 var Profile = require('./Profile');
+var ProfileBase = require('./ProfileBase');
 var Contact = require('./Contact');
 var Messages = require('./Messages');
-
 
 class Main extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
-      page: Contact
+      page: Messages
     };
   }
 
