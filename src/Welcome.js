@@ -1,7 +1,6 @@
 'use strict';
 import React, { Component } from 'react';
-import {
-  AppRegistry,
+import {  
   StyleSheet,
   Text,
   View,
@@ -25,7 +24,7 @@ class Welcome extends Component {
             <Button text="Sign up" onPress={this.onSignupPress.bind(this)}/>
             <Text style={styles.explanationText}>
             DryveWay is a utility app that helps people reach out to the
-            owner of vehicle anonymously in cases such as 'vehicle parked in your drive way' or
+            owner of vehicle anonymously in cases such as 'vehicle parked incorrectly' or
             'car fully charged but still plugged-in' or
             'car swiped accidently'.
             </Text>

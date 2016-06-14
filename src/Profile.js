@@ -33,7 +33,6 @@ class Profile extends Component {
       success: (results) => {
         for (var i = 0; i < results.length; i++) {
           var object = results[i];
-          console.log(object.id + ' - ' + object.get('licensePlate'));
           this.setState({
                  licensePlate: this.state.licensePlate.concat([object.get('licensePlate')]),
                  registeredState: this.state.registeredState.concat([object.get('registeredState')]),
@@ -47,6 +46,7 @@ class Profile extends Component {
   }
 
   render() {
+    console.log("reached");
     const { page } = this.state;
     return (
       <View style={styles.container}>
@@ -67,7 +67,7 @@ class Profile extends Component {
     })
   }
   updateVehicleInfo() {
-    this.props.navigator.push({name: 'CarReg'});
+    this.props.navigator.push({name: 'updateVehicles'});
   }
 }
 
@@ -76,7 +76,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
   titleContainer: {
     fontSize: 20,

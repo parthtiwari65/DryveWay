@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import Tabs from 'react-native-tabs';
 var Profile = require('./Profile');
-var ProfileBase = require('./ProfileBase');
 var Contact = require('./Contact');
 var Messages = require('./Messages');
 
@@ -22,7 +21,7 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: Messages
+      page: Contact
     };
   }
 
@@ -30,7 +29,7 @@ class Main extends Component {
     const { page } = this.state;
     return (
       <View style={styles.container}>
-        <this.state.page style={styles.pageContainer}/>
+        <this.state.page style={styles.pageContainer} navigator={this.props.navigator}/>
         <Tabs
           selected={page}
           style={styles.tabbar}
@@ -41,6 +40,7 @@ class Main extends Component {
             <Text style={styles.tabbarText} name={Messages}>Messages</Text>
             <Text style={styles.tabbarText} name={Profile}>Profile</Text>
         </Tabs>
+
       </View>
     );
   }
