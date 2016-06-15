@@ -64,7 +64,7 @@ class Contact extends Component {
       success: (results) => {
         if(results.length>0) {
           this.setState({
-                 successMessage: "Yay! This vehicle is registered with us \:D/"
+                 successMessage: "Yay! This vehicle is registered with us :D"
             });
         }
         else {
