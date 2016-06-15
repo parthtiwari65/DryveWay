@@ -46,7 +46,6 @@ class Profile extends Component {
   }
 
   render() {
-    console.log("reached");
     const { page } = this.state;
     return (
       <View style={styles.container}>

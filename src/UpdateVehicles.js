@@ -8,13 +8,15 @@ import {
 } from 'react-native'
 var Button = require('./Button');
 var Parse = require('parse/react-native');
+var lp = [];
+var st = [];
+
 
 class UpdateVehicles extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      username: "default",
       userEmail: "",
       errorMessage: "",
       licensePlate: [],
@@ -26,7 +28,6 @@ class UpdateVehicles extends Component {
     var currentUser = Parse.User.current();
     var userJSON = JSON.stringify(currentUser);
     var userinfo = eval ("(" + userJSON + ")");
-    this.setState({username: userinfo.username});
     this.setState({userEmail: userinfo.email});
     var vehicle = Parse.Object.extend("Vehicle");
     var query = new Parse.Query(vehicle);
@@ -42,7 +43,7 @@ class UpdateVehicles extends Component {
         }
       },
       error: (error) => {
-        console.log("Error: " + error.code + " " + error.message);
+        this.setState({errorMessage: error.message});
       }
     });
   }
@@ -60,27 +61,36 @@ class UpdateVehicles extends Component {
       </View>
     );
   }
+
+
   displayCars() {
-    return this.state.licensePlate.map((lp,index1) => {
+    lp=this.state.licensePlate;
+    st=this.state.registeredState;
+    return this.state.licensePlate.map((plate,index) => {
         return (<View>
-          <Text style={styles.titleContainer}> License plate number: </Text>
+          <Text style={styles.titleContainer}>License plate number: </Text>
           <TextInput
-            style={styles.textInputContainer}
-            onChangeText={(text) => this.setState({carNumber1: text})}
-            value={lp}/>
-          <Text style={styles.titleContainer}> State: </Text>
+            style = {styles.textInputContainer}
+            onChangeText = {(text) => lp[index]=text}
+            defaultValue = {this.state.licensePlate[index]}/>
+          <Text style = {styles.titleContainer}> State: </Text>
           <TextInput
-            style={styles.textInputContainer}
-            onChangeText={(text) => this.setState({carState1: text})}
-            value={this.state.registeredState[index1]}/></View>);
+            style = {styles.textInputContainer}
+            onChangeText = {(text) => st[index]=text}
+            defaultValue = {this.state.registeredState[index]}/></View>);
       })
-    return this.state.registeredState.map((state,index2) => {
-    })
   }
+
   editVehicles() {
-    this.props.navigator.pop();
+    this.setState({
+      licensePlate: lp,
+      registeredState: st,
+      errorMessage: "Saved!"
+    });
   }
   exitScreen() {
+    console.log(this.state.licensePlate[0] + " " + this.state.registeredState[0])
+    console.log(this.state.licensePlate[1] + " " + this.state.registeredState[1])
     this.props.navigator.pop();
   }
 }
