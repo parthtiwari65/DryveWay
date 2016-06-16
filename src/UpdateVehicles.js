@@ -85,7 +85,39 @@ class UpdateVehicles extends Component {
     this.setState({
       licensePlate: lp,
       registeredState: st,
-      errorMessage: "Saved!"
+      errorMessage: "Saving..."
+    });
+    var vehicle = Parse.Object.extend("Vehicle");
+    var query = new Parse.Query(vehicle);
+    query.equalTo("userEmail", this.state.userEmail);
+    query.find({
+      success: (results) => {
+        for (var i = 0; i < results.length; i++) {
+          var object = results[i];
+          var queryUp = new Parse.Query(vehicle);
+          queryUp.equalTo("userEmail", this.state.userEmail);
+          queryUp.equalTo("licensePlate", object.get('licensePlate'));
+          queryUp.equalTo("registeredState", object.get('registeredState'));
+          queryUp.first({
+              success: (results) => {
+                  results.save(null, {
+                      success: (obj) => {
+                          obj.set("licensePlate", this.state.licensePlate[i]);
+                          obj.set("registeredState", this.state.registeredState[i]);
+                          obj.save();
+                      }
+                  });
+              },
+              error: function(error) {
+                this.setState({errorMessage: error.message});
+              }
+          });
+        }
+        errorMessage: "Done!"
+      },
+      error: function(error) {
+        this.setState({errorMessage: error.message});
+      }
     });
   }
   exitScreen() {

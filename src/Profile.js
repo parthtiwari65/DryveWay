@@ -50,7 +50,7 @@ class Profile extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.titleContainer}>
-          Hi! {this.state.username}
+          Hi {this.state.username}!
         </Text>
         <Text style={styles.titleContainer}>
           Your registered vehicles are,
