@@ -10,6 +10,8 @@ var Button = require('./Button');
 var Parse = require('parse/react-native');
 var lp = [];
 var st = [];
+var oldLP = [];
+var oldST = [];
 
 
 class UpdateVehicles extends Component {
@@ -40,6 +42,8 @@ class UpdateVehicles extends Component {
                  licensePlate: this.state.licensePlate.concat([object.get('licensePlate')]),
                  registeredState: this.state.registeredState.concat([object.get('registeredState')]),
             });
+            oldLP.push(object.get('licensePlate'));
+            oldST.push(object.get('registeredState'));
         }
       },
       error: (error) => {
@@ -85,40 +89,35 @@ class UpdateVehicles extends Component {
     this.setState({
       licensePlate: lp,
       registeredState: st,
-      errorMessage: "Saving..."
+      errorMessage: "Saving...",
     });
-    var vehicle = Parse.Object.extend("Vehicle");
-    var query = new Parse.Query(vehicle);
-    query.equalTo("userEmail", this.state.userEmail);
-    query.find({
-      success: (results) => {
-        for (var i = 0; i < results.length; i++) {
-          var object = results[i];
-          var queryUp = new Parse.Query(vehicle);
-          queryUp.equalTo("userEmail", this.state.userEmail);
-          queryUp.equalTo("licensePlate", object.get('licensePlate'));
-          queryUp.equalTo("registeredState", object.get('registeredState'));
-          queryUp.first({
-              success: (results) => {
-                  results.save(null, {
-                      success: (obj) => {
-                          obj.set("licensePlate", this.state.licensePlate[i]);
-                          obj.set("registeredState", this.state.registeredState[i]);
-                          obj.save();
-                      }
-                  });
-              },
-              error: function(error) {
-                this.setState({errorMessage: error.message});
-              }
+
+    // console.log("Old Plate " + oldLP[0] +  " " + oldLP[1])
+    // console.log("Old State " + oldST[0] +  " " + oldST[1])
+    // console.log("New Plate " + this.state.licensePlate[0] + " " + this.state.licensePlate[1])
+    // console.log("New State " + this.state.registeredState[0] +  " " + this.state.registeredState[1])
+
+    for (var i = 0; i < this.state.licensePlate.length; i++) {
+      console.log(i);
+      var vehicle = Parse.Object.extend("Vehicle");
+      var query = new Parse.Query(vehicle);
+      query.equalTo("userEmail", this.state.userEmail);
+      query.equalTo("licensePlate", oldLP[i]);
+      query.equalTo("registeredState", oldST[i]);
+      query.first({
+        success: (results) => {
+          results.save(null, {
+            success: (obj) => {
+              obj.set("licensePlate",this.state.licensePlate[i]);
+              obj.set("registeredState",this.state.registeredState[i]);
+              obj.save();
+              console.log("done with" + i);
+              this.setState({errorMessage: "Done!"});
+            }
           });
         }
-        errorMessage: "Done!"
-      },
-      error: function(error) {
-        this.setState({errorMessage: error.message});
-      }
-    });
+      });
+    }
   }
   exitScreen() {
     console.log(this.state.licensePlate[0] + " " + this.state.registeredState[0])
