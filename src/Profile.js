@@ -19,7 +19,6 @@ class Profile extends Component {
       registeredState: [],
     };
   }
-
   componentWillMount() {
     var currentUser = Parse.User.current();
     var userJSON = JSON.stringify(currentUser);
@@ -44,7 +43,6 @@ class Profile extends Component {
       }
     });
   }
-
   render() {
     const { page } = this.state;
     return (

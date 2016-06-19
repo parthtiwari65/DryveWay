@@ -5,14 +5,13 @@ import {
   StyleSheet,
   Text,
   TextInput,
-} from 'react-native'
+} from 'react-native';
 var Button = require('./Button');
 var Parse = require('parse/react-native');
 var lp = [];
 var st = [];
 var oldLP = [];
 var oldST = [];
-
 
 class UpdateVehicles extends Component {
 
@@ -66,7 +65,6 @@ class UpdateVehicles extends Component {
     );
   }
 
-
   displayCars() {
     lp=this.state.licensePlate;
     st=this.state.registeredState;
@@ -92,26 +90,21 @@ class UpdateVehicles extends Component {
       errorMessage: "Saving...",
     });
 
-    // console.log("Old Plate " + oldLP[0] +  " " + oldLP[1])
-    // console.log("Old State " + oldST[0] +  " " + oldST[1])
-    // console.log("New Plate " + this.state.licensePlate[0] + " " + this.state.licensePlate[1])
-    // console.log("New State " + this.state.registeredState[0] +  " " + this.state.registeredState[1])
-
     for (var i = 0; i < this.state.licensePlate.length; i++) {
-      console.log(i);
       var vehicle = Parse.Object.extend("Vehicle");
       var query = new Parse.Query(vehicle);
       query.equalTo("userEmail", this.state.userEmail);
       query.equalTo("licensePlate", oldLP[i]);
       query.equalTo("registeredState", oldST[i]);
+      var ctr = 0 ;
       query.first({
         success: (results) => {
           results.save(null, {
             success: (obj) => {
-              obj.set("licensePlate",this.state.licensePlate[i]);
-              obj.set("registeredState",this.state.registeredState[i]);
+              obj.set("licensePlate",this.state.licensePlate[ctr]);
+              obj.set("registeredState",this.state.registeredState[ctr]);
+              ctr = ctr+1;
               obj.save();
-              console.log("done with" + i);
               this.setState({errorMessage: "Done!"});
             }
           });
@@ -120,8 +113,6 @@ class UpdateVehicles extends Component {
     }
   }
   exitScreen() {
-    console.log(this.state.licensePlate[0] + " " + this.state.registeredState[0])
-    console.log(this.state.licensePlate[1] + " " + this.state.registeredState[1])
     this.props.navigator.pop();
   }
 }
