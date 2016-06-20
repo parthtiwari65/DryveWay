@@ -20,6 +20,26 @@ class Profile extends Component {
     };
   }
   componentWillMount() {
+    this.fetchVehicleDetails();
+  }
+  componentWillUpdate() {
+  }
+  render() {
+    const { page } = this.state;
+    return (
+      <View style={styles.container}>
+        <Text style={styles.titleContainer}>
+          Hi {this.state.username}!
+        </Text>
+        <Text style={styles.titleContainer}>
+          Your registered vehicles are,
+        </Text>
+        {this.displayCars()}
+        <Button text="Edit vehicles" onPress={this.updateVehicleInfo.bind(this)}/>
+      </View>
+    );
+  }
+  fetchVehicleDetails() {
     var currentUser = Parse.User.current();
     var userJSON = JSON.stringify(currentUser);
     var userinfo = eval ("(" + userJSON + ")");
@@ -42,21 +62,6 @@ class Profile extends Component {
         console.log("Error: " + error.code + " " + error.message);
       }
     });
-  }
-  render() {
-    const { page } = this.state;
-    return (
-      <View style={styles.container}>
-        <Text style={styles.titleContainer}>
-          Hi {this.state.username}!
-        </Text>
-        <Text style={styles.titleContainer}>
-          Your registered vehicles are,
-        </Text>
-        {this.displayCars()}
-        <Button text="Edit vehicles" onPress={this.updateVehicleInfo.bind(this)}/>
-      </View>
-    );
   }
   displayCars() {
     return this.state.licensePlate.map((str,index) => {

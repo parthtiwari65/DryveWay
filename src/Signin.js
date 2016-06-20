@@ -48,7 +48,7 @@ class Signin extends Component {
     Parse.User.logIn(this.state.username, this.state.password, {
       success: (user) => {
         this.setState({errorMessage: ""})
-        this.props.navigator.push({name: 'main'});
+        this.props.navigator.immediatelyResetRouteStack([{ name: 'main' }]);
       },
       error: (user, error) => {
         this.setState({errorMessage: error.message});

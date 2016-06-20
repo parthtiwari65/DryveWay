@@ -108,7 +108,7 @@ class CarReg extends Component {
       vehicle.set("userEmail", this.state.userEmail);
       vehicle.save(null, {
         success: (gameScore) => {
-          this.props.navigator.push({name: 'main'});
+          this.props.navigator.immediatelyResetRouteStack([{ name: 'main' }])
         },
         error: (gameScore, error) => {
           this.setState({errorMessage: error.message});
@@ -123,7 +123,7 @@ class CarReg extends Component {
             vehicle.set("userEmail", this.state.userEmail);
             vehicle.save(null, {
               success: (gameScore) => {
-                this.props.navigator.push({name: 'main'});
+                this.props.navigator.immediatelyResetRouteStack([{ name: 'main' }])
               },
               error: (gameScore, error) => {
                 this.setState({errorMessage: error.message});
@@ -132,7 +132,7 @@ class CarReg extends Component {
     }
   }
   onNoCarPress() {
-    this.props.navigator.push({name: 'main'});
+    this.props.navigator.immediatelyResetRouteStack([{ name: 'main' }])
   }
 }
 

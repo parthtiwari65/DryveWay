@@ -12,6 +12,8 @@ var Main = require('./Main');
 var CarReg = require('./CarReg');
 var UpdateVehicles = require('./UpdateVehicles');
 var Parse = require('parse/react-native');
+var sendbird = require('sendbird');
+var appId = 'A7A2672C-AD11-11E4-8DAA-0A18B21C2D82';
 
 var ROUTES = {
   'welcome': Welcome,

@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 var Button = require('./Button');
 var Parse = require('parse/react-native');
+var sendbird = require('sendbird');
+var appId = '6662716B-F212-4E6A-873F-7C676F7ADC4E';
 
 class Signup extends Component {
 
@@ -59,15 +61,56 @@ class Signup extends Component {
 
   onSubmitPress() {
     this.setState({errorMessage: "Loading..."})
-    if(this.state.password != this.state.confirmPassword) {
+    if (this.state.username.trim().length == 0) {
+      this.setState({
+        username: '',
+        errorMessage: 'Please enter username'
+      });
+      return;
+    }
+
+    var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi
+    if (regExp.test(this.state.username)) {
+        this.setState({
+          username: '',
+          errorMessage: 'Please only alphanumeric characters in username'
+        });
+        return;
+      }
+
+    if (this.state.password.trim().length == 0) {
+        this.setState({
+          password: '',
+          errorMessage: 'Please enter password'
+        });
+        return;
+    }
+
+    if (this.state.password != this.state.confirmPassword) {
       this.setState({errorMessage: "Sorry, passwords don't match"})
       return
     }
+
+    sendbird.init({
+      app_id: appId,
+      guest_id: this.state.email,
+      user_name: this.state.email,
+      image_url: "",
+      access_token: "",
+      successFunc: (data) => {
+        this.setState({errorMessage: "Messaging registered, logging in.."})
+        console.log("chat registered")
+      },
+      errorFunc: (status, error) => {
+        this.setState({errorMessage: "Failed to register messaging, try again later.."})
+        return;
+      }
+    });
+
     var user = new Parse.User();
     user.set("username", this.state.username);
     user.set("password", this.state.password);
     user.set("email", this.state.email);
-
     user.signUp(null, {
       success: (user) => {
         this.setState({errorMessage: ""});

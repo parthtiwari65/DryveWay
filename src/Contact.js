@@ -8,16 +8,43 @@ import {
 } from 'react-native';
 var Button = require('./Button');
 var Parse = require('parse/react-native');
+var sendbird = require('sendbird');
+var appId = '6662716B-F212-4E6A-873F-7C676F7ADC4E';
 
 class Contact extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      carOwnerEmail: "",
       carNumber: "",
       carState: "",
       successMessage: "",
+      currentUserEmail: "",
+      errorMessage: "",
     };
+  }
+  componentWillMount() {
+    var currentUser = Parse.User.current();
+    var userJSON = JSON.stringify(currentUser);
+    var userinfo = eval ("(" + userJSON + ")");
+    this.setState({currentUserEmail: userinfo.email});
+    console.log("User:" + userinfo.email)
+    sendbird.init({
+      app_id: appId,
+      guest_id: userinfo.email,
+      user_name: userinfo.email,
+      image_url: "",
+      access_token: "",
+      successFunc: (data) => {
+        this.setState({errorMessage: "Messaging registered, logging in.."})
+        console.log("chat registered")
+      },
+      errorFunc: (status, error) => {
+        this.setState({errorMessage: "Failed to register messaging, try again later.."})
+        return;
+      }
+    });
   }
 
   render() {
@@ -49,7 +76,32 @@ class Contact extends Component {
   }
 
   onContactPress() {
-
+    var guestIds =[];
+    guestIds.push(this.state.currentUserEmail);
+    guestIds.push(this.state.carOwnerEmail);
+    sendbird.startMessaging(
+      guestIds,
+      {
+        "successFunc" : function(data) {
+          console.log("1. Success:"+ data);
+          sendbird.connect({
+            "successFunc" : function(data) {
+              console.log("2. Success:" + data);
+              // do something
+              },
+              "errorFunc": function(status, error) {
+                console.log(status, error);
+                // do something
+              }
+          });
+          // do something
+        },
+        "errorFunc": function(status, error) {
+            console.log(status, error);
+            // do something
+        }
+      }
+    );
   }
 
   onCheckPress() {
@@ -63,9 +115,12 @@ class Contact extends Component {
     query.find({
       success: (results) => {
         if(results.length>0) {
+          var object = results[0];
           this.setState({
+                 carOwnerEmail: object.get('userEmail'),
                  successMessage: "Yay! This vehicle is registered with us :D"
             });
+            console.log(object.get('userEmail'));
         }
         else {
           this.setState({
