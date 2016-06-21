@@ -10,7 +10,8 @@ var Button = require('./Button');
 var Parse = require('parse/react-native');
 var sendbird = require('sendbird');
 var appId = '6662716B-F212-4E6A-873F-7C676F7ADC4E';
-
+//6662716B-F212-4E6A-873F-7C676F7ADC4E
+//A7A2672C-AD11-11E4-8DAA-0A18B21C2D82
 class Contact extends Component {
 
   constructor(props) {
@@ -75,6 +76,14 @@ class Contact extends Component {
     );
   }
 
+  onBackPress() {
+    this.props.navigator.pop();
+  }
+  onSendPress() {
+    console.log(this.state.message);
+    this.setState({message: ''});
+  }
+
   onContactPress() {
     var guestIds =[];
     guestIds.push(this.state.currentUserEmail);
@@ -82,12 +91,13 @@ class Contact extends Component {
     sendbird.startMessaging(
       guestIds,
       {
-        "successFunc" : function(data) {
+        "successFunc" : (data) => {
           console.log("1. Success:"+ data);
           sendbird.connect({
-            "successFunc" : function(data) {
+            "successFunc" : (data) => {
               console.log("2. Success:" + data);
               // do something
+                this.props.navigator.push({name: 'chat'});
               },
               "errorFunc": function(status, error) {
                 console.log(status, error);

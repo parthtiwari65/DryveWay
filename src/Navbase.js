@@ -11,6 +11,7 @@ var Signup = require('./Signup');
 var Main = require('./Main');
 var CarReg = require('./CarReg');
 var UpdateVehicles = require('./UpdateVehicles');
+var Chat = require('./Chat');
 var Parse = require('parse/react-native');
 var sendbird = require('sendbird');
 var appId = 'A7A2672C-AD11-11E4-8DAA-0A18B21C2D82';
@@ -22,6 +23,7 @@ var ROUTES = {
   'carReg': CarReg,
   'main': Main,
   'updateVehicles': UpdateVehicles,
+  'chat': Chat
 };
 
 class Navbase extends Component {
