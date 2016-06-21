@@ -18,16 +18,39 @@ class Chat extends Component {
     super(props);
       this.state = {
         message: '',
+         messageList: []
       };
+  }
+  componentWillMount() {
+    sendbird.events.onMessageReceived = (obj) => {
+      this.setState({messageList: this.state.messageList.concat([obj])});
+    };
+    this.getMessages();
+  }
+  getMessages() {
+    sendbird.getMessageLoadMore({
+      limit: 100,
+      successFunc: (data) => {
+        var _messageList = [];
+        data.messages.reverse().forEach(function(msg, index){
+          if(sendbird.isMessage(msg.cmd)) {
+            _messageList.push(msg.payload);
+          }
+        });
+        this.setState({ messageList: _messageList.concat(this.state.messageList) });
+      },
+      errorFunc: (status, error) => {
+        console.log(status, error);
+      }
+    });
   }
   onBackPress() {
     this.props.navigator.pop();
   }
   onSendPress() {
-    console.log(this.state.message);
+    sendbird.message(this.state.message);
     this.setState({message: ''});
   }
-  
   render() {
     return (
       <View style={styles.container}>
@@ -37,11 +60,18 @@ class Chat extends Component {
             onPress={this.onBackPress.bind(this)}
             style={{marginLeft: 15}}
             >
-            <Text style={{color: '#fff'}}>&lt; Back</Text>
+            <Text style={{color: '#000000'}}>&lt; Back</Text>
           </TouchableHighlight>
         </View>
         <View style={styles.chatContainer}>
-          <Text style={{color: '#000'}}>Chat</Text>
+          <ScrollView
+            ref={(c) => this._scrollView = c}
+            onScroll={this.handleScroll}
+            scrollEventThrottle={16}
+            onContentSizeChange={(e) => {}}
+          >
+          {list}
+          </ScrollView>
         </View>
         <View style={styles.inputContainer}>
           <View style={styles.textContainer}>
@@ -54,7 +84,7 @@ class Chat extends Component {
           <View style={styles.sendContainer}>
             <TouchableHighlight
               underlayColor={'#4e4273'}
-              onPress={() => this.onSendPress.bind(this)}
+              onPress={this.onSendPress.bind(this)}
               >
               <Text style={styles.sendLabel}>SEND</Text>
             </TouchableHighlight>
@@ -77,7 +107,7 @@ var styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'flex-start',
       alignItems: 'center',
-      backgroundColor: '#6E5BAA',
+      backgroundColor: '#F5FCFF',
       paddingTop: 20,
     },
     chatContainer: {
@@ -90,7 +120,7 @@ var styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-around',
       alignItems: 'center',
-      backgroundColor: '#6E5BAA'
+      backgroundColor: '#F5FCFF'
     },
     textContainer: {
       flex: 1,
@@ -101,7 +131,7 @@ var styles = StyleSheet.create({
       paddingRight: 10
     },
     sendLabel: {
-      color: '#ffffff',
+      color: '#000000',
       fontSize: 15
     },
     input: {
