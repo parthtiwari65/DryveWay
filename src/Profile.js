@@ -34,7 +34,9 @@ class Profile extends Component {
         <Text style={styles.titleContainer}>
           Your registered vehicles are,
         </Text>
+        <View>
         {this.displayCars()}
+        </View>
         <Button text="Edit vehicles" onPress={this.updateVehicleInfo.bind(this)}/>
       </View>
     );
@@ -65,7 +67,7 @@ class Profile extends Component {
   }
   displayCars() {
     return this.state.licensePlate.map((str,index) => {
-      return (<View><Text style={styles.titleContainer}>Vehicle {index+1}: {str}</Text></View>);
+      return (<Text key={str} style={styles.titleContainer}>Vehicle {index+1}: {str}</Text>);
     })
   }
   updateVehicleInfo() {

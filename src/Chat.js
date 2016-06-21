@@ -146,7 +146,8 @@ var styles = StyleSheet.create({
     },
     sendLabel: {
       color: '#000000',
-      fontSize: 15
+      fontSize: 15,
+      fontFamily: 'Helvetica',
     },
     input: {
       width: windowSize.width - 70,

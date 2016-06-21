@@ -57,7 +57,7 @@ class UpdateVehicles extends Component {
         <Text
           style={[styles.titleContainer, {marginBottom: 30}]}>
           Edit your vehicles </Text>
-          {this.displayCars()}
+        {this.displayCars()}
         <Text style={styles.errorColor}>{this.state.errorMessage}</Text>
         <Button text="Submit" onPress={this.editVehicles.bind(this)}/>
         <Button text="Back" onPress={this.exitScreen.bind(this)}/>
@@ -69,14 +69,19 @@ class UpdateVehicles extends Component {
     lp=this.state.licensePlate;
     st=this.state.registeredState;
     return this.state.licensePlate.map((plate,index) => {
-        return (<View>
-          <Text style={styles.titleContainer}>License plate number: </Text>
+        return (
+          <View key={index}>
+          <Text key = {index + " plate"} style={styles.titleContainer}>License plate number:
+          </Text>
           <TextInput
+            key = {plate + " plate"}
             style = {styles.textInputContainer}
             onChangeText = {(text) => lp[index]=text}
             defaultValue = {this.state.licensePlate[index]}/>
-          <Text style = {styles.titleContainer}> State: </Text>
+          <Text key = {index + " state"} style = {styles.titleContainer}> State:
+          </Text>
           <TextInput
+            key = {this.state.registeredState[index] + " state"}
             style = {styles.textInputContainer}
             onChangeText = {(text) => st[index]=text}
             defaultValue = {this.state.registeredState[index]}/></View>);
