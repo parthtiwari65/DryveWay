@@ -76,13 +76,7 @@ class Contact extends Component {
     );
   }
 
-  onBackPress() {
-    this.props.navigator.pop();
-  }
-  onSendPress() {
-    console.log(this.state.message);
-    this.setState({message: ''});
-  }
+
 
   onContactPress() {
     var guestIds =[];

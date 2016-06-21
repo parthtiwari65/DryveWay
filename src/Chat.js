@@ -6,7 +6,8 @@ import {
   TextInput,
   TouchableHighlight,
   StyleSheet,
-  Dimensions
+  Dimensions,
+  ScrollView
 } from 'react-native';
 
 var sendbird = require('sendbird');
@@ -52,6 +53,19 @@ class Chat extends Component {
     this.setState({message: ''});
   }
   render() {
+    var list = this.state.messageList.map((item, index) => {
+      return (
+        <View
+          style={styles.messageContainer}
+          key={index}
+          >
+          <Text style={this.nameLabel}>
+            {item.user.name}
+            <Text style={styles.messageLabel}> : {item.message}</Text>
+          </Text>
+        </View>
+      );
+    });
     return (
       <View style={styles.container}>
         <View style={styles.topContainer}>
