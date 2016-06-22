@@ -23,7 +23,7 @@ class Welcome extends Component {
             <Button text="Log in" onPress={this.onLoginPress.bind(this)}/>
             <Button text="Sign up" onPress={this.onSignupPress.bind(this)}/>
             <Text style={styles.explanationText}>
-            DryveWay is a utility app that helps people reach out to the
+            DryveWay is a utility mobile app that helps people reach out to the
             owner of a vehicle anonymously in cases such as 'vehicle parked incorrectly' or
             'car fully charged but still plugged-in' or
             'car swiped accidently'.

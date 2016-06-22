@@ -7,6 +7,7 @@ import {
   TextInput
 } from 'react-native';
 var Button = require('./Button');
+var VerifyThings = require('./VerifyThings');
 var Parse = require('parse/react-native');
 var sendbird = require('sendbird');
 var appId = '6662716B-F212-4E6A-873F-7C676F7ADC4E';
@@ -61,6 +62,7 @@ class Contact extends Component {
             Want to contact a vehicle owner?</Text>
             <Text style={styles.titleContainer}> License plate number:</Text>
                 <TextInput
+                 autoCorrect={false}
                  style={styles.textInputContainer}
                  autoCapitalize={'characters'}
                  maxLength = {7}
@@ -68,6 +70,7 @@ class Contact extends Component {
                  value={this.state.carNumber}/>
             <Text style={styles.titleContainer}> State: </Text>
                 <TextInput
+                  autoCorrect={false}
                   style={styles.textInputContainer}
                   autoCapitalize={'characters'}
                   maxLength = {2}
@@ -110,39 +113,19 @@ class Contact extends Component {
     );
   }
 
-  verifyPlateNumber(plateNumber){
-    if (plateNumber.trim().length == 0) {
-      return 'Please enter plate number';
-    }
-    var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
-    if (regExp.test(plateNumber)) {
-        return 'Please only alphanumeric characters in plate number';
-    }
-    return 'correct';
-  }
-  verifyState(state){
-    if (state.trim().length == 0) {
-      return 'Please enter state';
-    }
-    var regExpState = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"0-9]/gi
-    if (regExpState.test(state)) {
-        return 'Please only letters in state';
-      }
-    return 'correct';
-  }
-
   onCheckPress() {
     this.setState({
            successMessage: "Searching..."
       });
-      var ver = this.verifyPlateNumber(this.state.carNumber);
+      var obj = new VerifyThings();
+      var ver = obj.verifyPlateNumber(this.state.carNumber);
       if( ver!= "correct") {
         this.setState({
           successMessage: ver
         });
         return;
       }
-      var ver = this.verifyState(this.state.carState);
+      var ver = obj.verifyState(this.state.carState);
       if( ver!= "correct") {
         this.setState({
           successMessage: ver

@@ -7,6 +7,7 @@ import {
   TextInput,
 } from 'react-native';
 var Button = require('./Button');
+var VerifyThings = require('./VerifyThings');
 var Parse = require('parse/react-native');
 var lp = [];
 var st = [];
@@ -71,20 +72,24 @@ class UpdateVehicles extends Component {
     return this.state.licensePlate.map((plate,index) => {
         return (
           <View key={index}>
-          <Text key = {index + " plate"} style={styles.titleContainer}>License plate number:
+          <Text key = {index + " plate"} style={styles.titleContainer}>
+          License plate number:
           </Text>
           <TextInput
             maxLength = {7}
+            autoCorrect={false}
             autoCapitalize={'characters'}
             key = {plate + " plate"}
             style = {styles.textInputContainer}
             onChangeText = {(text) => lp[index]=text}
             defaultValue = {this.state.licensePlate[index]}/>
-          <Text key = {index + " state"} style = {styles.titleContainer}> State:
+          <Text key={index + " state"} style={styles.titleContainer}>
+          State:
           </Text>
           <Text style={styles.warningMessage}>2-letter state code</Text>
           <TextInput
             maxLength = {2}
+            autoCorrect={false}
             autoCapitalize={'characters'}
             key = {this.state.registeredState[index] + " state"}
             style = {styles.textInputContainer}
@@ -99,6 +104,24 @@ class UpdateVehicles extends Component {
       registeredState: st,
       errorMessage: "Saving...",
     });
+    for (var i = 0; i < this.state.licensePlate.length; i++) {
+
+      var obj = new VerifyThings();
+      var ver = obj.verifyPlateNumber(this.state.licensePlate[i]);
+      if( ver!= "correct") {
+        this.setState({
+          errorMessage: ver
+        });
+        return;
+      }
+      var ver = obj.verifyState(this.state.registeredState[i]);
+      if( ver!= "correct") {
+        this.setState({
+          errorMessage: ver
+        });
+        return;
+      }
+    }
 
     for (var i = 0; i < this.state.licensePlate.length; i++) {
       var vehicle = Parse.Object.extend("Vehicle");
@@ -129,14 +152,20 @@ class UpdateVehicles extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex:1,
+    backgroundColor: '#F5FCFF',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
   titleContainer: {
+    justifyContent: 'center',
+    textAlign: 'center',
     fontSize: 20,
     fontFamily: 'Helvetica',
+  },
+  textContainer: {
+    borderWidth: 2,
+    borderColor: 'green',
   },
   errorColor: {
     color: 'red',
@@ -156,6 +185,7 @@ const styles = StyleSheet.create({
   },
   warningMessage: {
     color: '#2f4f4f',
+    textAlign: 'center',
     fontFamily: 'Helvetica',
     fontSize: 12,
   },

@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 var Button = require('./Button');
 var Parse = require('parse/react-native');
+var VerifyThings = require('./VerifyThings');
 
 class CarReg extends Component {
 
@@ -42,6 +43,7 @@ class CarReg extends Component {
                         <TextInput
                           style={styles.textInputContainer}
                           maxLength = {7}
+                          autoCorrect={false}
                           autoCapitalize={'characters'}
                           onChangeText={(text) => this.setState({carNumber2: text})}
                           value={this.state.carNumber2}/>
@@ -49,6 +51,7 @@ class CarReg extends Component {
                         <TextInput
                           style={styles.textInputContainer}
                           maxLength = {2}
+                          autoCorrect={false}
                           autoCapitalize={'characters'}
                           onChangeText={(text) => this.setState({carState2: text})}
                           value={this.state.carState2}/>
@@ -66,6 +69,7 @@ class CarReg extends Component {
         <TextInput
           style={styles.textInputContainer}
           maxLength = {7}
+          autoCorrect={false}
           autoCapitalize={'characters'}
           onChangeText={(text) => this.setState({carNumber1: text})}
           value={this.state.carNumber1}/>
@@ -75,6 +79,7 @@ class CarReg extends Component {
           style={styles.textInputContainer}
           onChangeText={(text) => this.setState({carState1: text})}
           maxLength = {2}
+          autoCorrect={false}
           autoCapitalize={'characters'}
           value={this.state.carState1}/>
         {carFields}
@@ -97,7 +102,35 @@ class CarReg extends Component {
   onSubmitPress() {
     this.setState({errorMessage: "Loading..."});
     if(this.state.carEntry) {
-
+      var obj = new VerifyThings();
+      var ver = obj.verifyPlateNumber(this.state.carNumber1);
+      if( ver!= "correct") {
+        this.setState({
+          errorMessage: ver
+        });
+        return;
+      }
+      var ver = obj.verifyState(this.state.carState1);
+      if( ver!= "correct") {
+        this.setState({
+          errorMessage: ver
+        });
+        return;
+      }
+      var ver = obj.verifyPlateNumber(this.state.carNumber2);
+      if( ver!= "correct") {
+        this.setState({
+          errorMessage: ver
+        });
+        return;
+      }
+      var ver = obj.verifyState(this.state.carState2);
+      if( ver!= "correct") {
+        this.setState({
+          errorMessage: ver
+        });
+        return;
+      }
       var Vehicle = Parse.Object.extend("Vehicle");
       var vehicle = new Vehicle();
       vehicle.set("licensePlate", this.state.carNumber1);
@@ -125,6 +158,21 @@ class CarReg extends Component {
       });
     }
     else {
+            var obj = new VerifyThings();
+            var ver = obj.verifyPlateNumber(this.state.carNumber1);
+            if( ver!= "correct") {
+              this.setState({
+                errorMessage: ver
+              });
+              return;
+            }
+            var ver = obj.verifyState(this.state.carState1);
+            if( ver!= "correct") {
+              this.setState({
+                errorMessage: ver
+              });
+              return;
+            }
             var Vehicle = Parse.Object.extend("Vehicle");
             var vehicle = new Vehicle();
             vehicle.set("licensePlate", this.state.carNumber1);

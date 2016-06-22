@@ -31,6 +31,7 @@ class Signup extends Component {
         <Text style={[styles.titleContainer, {marginBottom: 30}]}> Please register here </Text>
         <Text style={styles.titleContainer}> Email: </Text>
         <TextInput
+          autoCorrect={false}
           style={styles.textInputContainer}
           onChangeText={(text) => this.setState({email: text})}
           value={this.state.email}/>
@@ -38,17 +39,20 @@ class Signup extends Component {
         <Text style={styles.warningMessage}> Username is public, do not use your
          real name ..</Text>
         <TextInput
+          autoCorrect={false}
           style={styles.textInputContainer}
           onChangeText={(text) => this.setState({username: text})}
           value={this.state.username}/>
         <Text style={styles.titleContainer}> Password: </Text>
         <TextInput
+          autoCorrect={false}
           style={styles.textInputContainer}
           onChangeText={(text) => this.setState({password: text})}
           value={this.state.password}
           secureTextEntry={true}/>
         <Text style={styles.titleContainer}> Confirm password: </Text>
         <TextInput
+            autoCorrect={false}
             style={styles.textInputContainer}
             onChangeText={(text) => this.setState({confirmPassword: text})}
             value={this.state.confirmPassword}

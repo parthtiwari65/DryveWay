@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    borderColor: '#a52a2a',
   },
   titleContainer: {
     fontSize: 20,

@@ -116,8 +116,8 @@ getLastMessage(msg) {
   var _last_message = '';
   if (typeof msg == 'object' && msg.message.length) {
     _last_message = msg.message;
-    if (_last_message.length > 20) {
-      _last_message = _last_message.substring(0, 19) + '...';
+    if (_last_message.length > 30) {
+      _last_message = _last_message.substring(0, 29) + '...';
     }
   }
   return _last_message;
@@ -132,6 +132,8 @@ getLastMessage(msg) {
         <View style={styles.listContainer}>
           <ListView
             enableEmptySections
+            automaticallyAdjustContentInsets={false}
+            contentInset={{bottom:49}}
             dataSource={this.state.dataSource}
             renderRow={(rowData) =>
               <TouchableHighlight onPress={() => this.onChannelPress(rowData.channel_url)}>
@@ -164,8 +166,7 @@ var styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   listContainer: {
-    flex: 15,
-    alignSelf: 'stretch',
+    flex: 12,
     justifyContent: 'center',
     alignItems: 'stretch',
   },
@@ -222,7 +223,7 @@ var styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
     marginTop: 20,
     borderBottomColor: 'blue',
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.5,
   },
   topContainerText: {
     fontSize: 20,
