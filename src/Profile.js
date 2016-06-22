@@ -49,7 +49,7 @@ class Profile extends Component {
     this.setState({userEmail: userinfo.email});
     var vehicle = Parse.Object.extend("Vehicle");
     var query = new Parse.Query(vehicle);
-    query.equalTo("userEmail", userinfo.email);
+    query.equalTo("username", userinfo.username);
     query.find({
       success: (results) => {
         for (var i = 0; i < results.length; i++) {

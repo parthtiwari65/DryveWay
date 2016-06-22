@@ -18,7 +18,7 @@ class UpdateVehicles extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userEmail: "",
+      username: "",
       errorMessage: "",
       licensePlate: [],
       registeredState: [],
@@ -29,10 +29,10 @@ class UpdateVehicles extends Component {
     var currentUser = Parse.User.current();
     var userJSON = JSON.stringify(currentUser);
     var userinfo = eval ("(" + userJSON + ")");
-    this.setState({userEmail: userinfo.email});
+    this.setState({username: userinfo.username});
     var vehicle = Parse.Object.extend("Vehicle");
     var query = new Parse.Query(vehicle);
-    query.equalTo("userEmail", userinfo.email);
+    query.equalTo("username", userinfo.username);
     query.find({
       success: (results) => {
         for (var i = 0; i < results.length; i++) {
@@ -98,7 +98,7 @@ class UpdateVehicles extends Component {
     for (var i = 0; i < this.state.licensePlate.length; i++) {
       var vehicle = Parse.Object.extend("Vehicle");
       var query = new Parse.Query(vehicle);
-      query.equalTo("userEmail", this.state.userEmail);
+      query.equalTo("username", this.state.username);
       query.equalTo("licensePlate", oldLP[i]);
       query.equalTo("registeredState", oldST[i]);
       var ctr = 0 ;

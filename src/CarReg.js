@@ -20,7 +20,7 @@ class CarReg extends Component {
       carState2: "",
       errorMessage: "",
       carEntry: false,
-      userEmail: "",
+      username: "",
     };
   }
 
@@ -28,7 +28,7 @@ class CarReg extends Component {
     var currentUser = Parse.User.current();
     var test = JSON.stringify(currentUser);
     var userinfo = eval ("(" + test + ")");
-    this.setState({userEmail: userinfo.email});
+    this.setState({username: userinfo.username});
   }
 
   render() {
@@ -93,7 +93,7 @@ class CarReg extends Component {
       var vehicle = new Vehicle();
       vehicle.set("licensePlate", this.state.carNumber1);
       vehicle.set("registeredState", this.state.carState1);
-      vehicle.set("userEmail", this.state.userEmail);
+      vehicle.set("username", this.state.username);
       vehicle.save(null, {
         success: (gameScore) => {
         },
@@ -105,7 +105,7 @@ class CarReg extends Component {
       var vehicle = new Vehicle();
       vehicle.set("licensePlate", this.state.carNumber2);
       vehicle.set("registeredState", this.state.carState2);
-      vehicle.set("userEmail", this.state.userEmail);
+      vehicle.set("username", this.state.username);
       vehicle.save(null, {
         success: (gameScore) => {
           this.props.navigator.immediatelyResetRouteStack([{ name: 'main' }])
@@ -120,7 +120,7 @@ class CarReg extends Component {
             var vehicle = new Vehicle();
             vehicle.set("licensePlate", this.state.carNumber1);
             vehicle.set("registeredState", this.state.carState1);
-            vehicle.set("userEmail", this.state.userEmail);
+            vehicle.set("username", this.state.username);
             vehicle.save(null, {
               success: (gameScore) => {
                 this.props.navigator.immediatelyResetRouteStack([{ name: 'main' }])

@@ -17,11 +17,11 @@ class Contact extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      carOwnerEmail: "",
+      carOwnerUserName: "",
       carNumber: "",
       carState: "",
       successMessage: "",
-      currentUserEmail: "",
+      currentUserName: "",
       errorMessage: "",
     };
   }
@@ -29,12 +29,12 @@ class Contact extends Component {
     var currentUser = Parse.User.current();
     var userJSON = JSON.stringify(currentUser);
     var userinfo = eval ("(" + userJSON + ")");
-    this.setState({currentUserEmail: userinfo.email});
-    console.log("User:" + userinfo.email)
+    this.setState({currentUserName: userinfo.username});
+    console.log("User:" + userinfo.username)
     sendbird.init({
       app_id: appId,
-      guest_id: userinfo.email,
-      user_name: userinfo.email,
+      guest_id: userinfo.username,
+      user_name: userinfo.username,
       image_url: "",
       access_token: "",
       successFunc: (data) => {
@@ -80,8 +80,8 @@ class Contact extends Component {
 
   onContactPress() {
     var guestIds =[];
-    guestIds.push(this.state.currentUserEmail);
-    guestIds.push(this.state.carOwnerEmail);
+    guestIds.push(this.state.currentUserName);
+    guestIds.push(this.state.carOwnerUserName);
     sendbird.startMessaging(
       guestIds,
       {
@@ -121,10 +121,9 @@ class Contact extends Component {
         if(results.length>0) {
           var object = results[0];
           this.setState({
-                 carOwnerEmail: object.get('userEmail'),
+                 carOwnerUserName: object.get('username'),
                  successMessage: "Yay! This vehicle is registered with us :D"
             });
-            console.log(object.get('userEmail'));
         }
         else {
           this.setState({
