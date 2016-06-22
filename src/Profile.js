@@ -13,7 +13,7 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "default",
+      username: "",
       userEmail: "",
       licensePlate: [],
       registeredState: [],

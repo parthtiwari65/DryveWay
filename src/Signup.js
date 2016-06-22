@@ -28,13 +28,15 @@ class Signup extends Component {
     const { page } = this.state;
     return (
       <View style={styles.container}>
-        <Text style={styles.titleContainer}> Please register here </Text>
+        <Text style={[styles.titleContainer, {marginBottom: 30}]}> Please register here </Text>
         <Text style={styles.titleContainer}> Email: </Text>
         <TextInput
           style={styles.textInputContainer}
           onChangeText={(text) => this.setState({email: text})}
           value={this.state.email}/>
         <Text style={styles.titleContainer}> Username: </Text>
+        <Text style={styles.warningMessage}> Username is public, do not use your
+         real name ..</Text>
         <TextInput
           style={styles.textInputContainer}
           onChangeText={(text) => this.setState({username: text})}
@@ -68,7 +70,20 @@ class Signup extends Component {
       });
       return;
     }
-
+    if (this.state.password.trim().length == 0) {
+      this.setState({
+        password: '',
+        errorMessage: 'Please enter password'
+      });
+      return;
+    }
+    if (this.state.email.trim().length == 0) {
+      this.setState({
+        email: '',
+        errorMessage: 'Please enter email'
+      });
+      return;
+    }
     var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi
     if (regExp.test(this.state.username)) {
         this.setState({
@@ -102,7 +117,9 @@ class Signup extends Component {
         console.log("chat registered")
       },
       errorFunc: (status, error) => {
-        this.setState({errorMessage: "Failed to register messaging, try again later.."})
+        this.setState({
+          errorMessage: "Failed to register messaging, try again later.."
+        });
         return;
       }
     });
@@ -152,6 +169,11 @@ const styles = StyleSheet.create({
   errorColor: {
     color: 'red',
     fontFamily: 'Helvetica',
+  },
+  warningMessage: {
+    color: '#2f4f4f',
+    fontFamily: 'Helvetica',
+    fontSize: 12,
   },
 });
 

@@ -62,11 +62,15 @@ class Contact extends Component {
             <Text style={styles.titleContainer}> License plate number:</Text>
                 <TextInput
                  style={styles.textInputContainer}
+                 autoCapitalize={'characters'}
+                 maxLength = {7}
                  onChangeText={(text) => this.setState({carNumber: text})}
                  value={this.state.carNumber}/>
             <Text style={styles.titleContainer}> State: </Text>
                 <TextInput
                   style={styles.textInputContainer}
+                  autoCapitalize={'characters'}
+                  maxLength = {2}
                   onChangeText={(text) => this.setState({carState: text})}
                   value={this.state.carState}/>
             <Text style={styles.succesMessageStyle}>{this.state.successMessage}</Text>
@@ -75,8 +79,6 @@ class Contact extends Component {
         </View>
     );
   }
-
-
 
   onContactPress() {
     var guestIds =[];
@@ -93,14 +95,14 @@ class Contact extends Component {
               // do something
                 this.props.navigator.push({name: 'chat'});
               },
-              "errorFunc": function(status, error) {
+              "errorFunc": (status, error) => {
                 console.log(status, error);
                 // do something
               }
           });
           // do something
         },
-        "errorFunc": function(status, error) {
+        "errorFunc": (status, error) => {
             console.log(status, error);
             // do something
         }
@@ -108,10 +110,46 @@ class Contact extends Component {
     );
   }
 
+  verifyPlateNumber(plateNumber){
+    if (plateNumber.trim().length == 0) {
+      return 'Please enter plate number';
+    }
+    var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+    if (regExp.test(plateNumber)) {
+        return 'Please only alphanumeric characters in plate number';
+    }
+    return 'correct';
+  }
+  verifyState(state){
+    if (state.trim().length == 0) {
+      return 'Please enter state';
+    }
+    var regExpState = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"0-9]/gi
+    if (regExpState.test(state)) {
+        return 'Please only letters in state';
+      }
+    return 'correct';
+  }
+
   onCheckPress() {
     this.setState({
            successMessage: "Searching..."
       });
+      var ver = this.verifyPlateNumber(this.state.carNumber);
+      if( ver!= "correct") {
+        this.setState({
+          successMessage: ver
+        });
+        return;
+      }
+      var ver = this.verifyState(this.state.carState);
+      if( ver!= "correct") {
+        this.setState({
+          successMessage: ver
+        });
+        return;
+      }
+
     var vehicle = Parse.Object.extend("Vehicle");
     var query = new Parse.Query(vehicle);
     query.equalTo("licensePlate", this.state.carNumber);
@@ -133,7 +171,7 @@ class Contact extends Component {
       },
       error: (error) => {
         this.setState({
-               successMessage: "Something went horrible wrong! :[ )"
+               successMessage: "Something went wrong, we're fixing it! :[ )"
           });
       }
     });

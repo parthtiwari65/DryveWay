@@ -24,7 +24,7 @@ class Signin extends Component {
     const { page } = this.state;
     return (
       <View style={styles.container}>
-      <Text style={styles.titleContainer}> Please log in here </Text>
+      <Text style={[styles.titleContainer, {marginBottom: 30}]}> Please log in here </Text>
       <Text style={styles.titleContainer}> Username: </Text>
       <TextInput
         style={styles.textInputContainer}
@@ -45,6 +45,20 @@ class Signin extends Component {
   }
   onLoginPress(){
     this.setState({errorMessage: "Loading..."})
+    if (this.state.username.trim().length == 0) {
+      this.setState({
+        username: '',
+        errorMessage: 'Please enter username'
+      });
+      return;
+    }
+    if (this.state.password.trim().length == 0) {
+      this.setState({
+        password: '',
+        errorMessage: 'Please enter password'
+      });
+      return;
+    }
     Parse.User.logIn(this.state.username, this.state.password, {
       success: (user) => {
         this.setState({errorMessage: ""})

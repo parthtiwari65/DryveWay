@@ -41,11 +41,15 @@ class CarReg extends Component {
                       <Text style={styles.titleContainer}> License plate number:</Text>
                         <TextInput
                           style={styles.textInputContainer}
+                          maxLength = {7}
+                          autoCapitalize={'characters'}
                           onChangeText={(text) => this.setState({carNumber2: text})}
                           value={this.state.carNumber2}/>
                       <Text style={styles.titleContainer}> State: </Text>
                         <TextInput
                           style={styles.textInputContainer}
+                          maxLength = {2}
+                          autoCapitalize={'characters'}
                           onChangeText={(text) => this.setState({carState2: text})}
                           value={this.state.carState2}/>
                     </View>;
@@ -61,12 +65,17 @@ class CarReg extends Component {
         <Text style={styles.titleContainer}> License plate number: </Text>
         <TextInput
           style={styles.textInputContainer}
+          maxLength = {7}
+          autoCapitalize={'characters'}
           onChangeText={(text) => this.setState({carNumber1: text})}
           value={this.state.carNumber1}/>
         <Text style={styles.titleContainer}> State: </Text>
+        <Text style={styles.warningMessage}>2-letter state code</Text>
         <TextInput
           style={styles.textInputContainer}
           onChangeText={(text) => this.setState({carState1: text})}
+          maxLength = {2}
+          autoCapitalize={'characters'}
           value={this.state.carState1}/>
         {carFields}
         <Text style={styles.errorColor}>{this.state.errorMessage}</Text>
@@ -167,6 +176,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 10,
     marginTop: 10,
+  },
+  warningMessage: {
+    color: '#2f4f4f',
+    fontFamily: 'Helvetica',
+    fontSize: 12,
   },
 });
 

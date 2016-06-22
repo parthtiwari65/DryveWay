@@ -74,13 +74,18 @@ class UpdateVehicles extends Component {
           <Text key = {index + " plate"} style={styles.titleContainer}>License plate number:
           </Text>
           <TextInput
+            maxLength = {7}
+            autoCapitalize={'characters'}
             key = {plate + " plate"}
             style = {styles.textInputContainer}
             onChangeText = {(text) => lp[index]=text}
             defaultValue = {this.state.licensePlate[index]}/>
           <Text key = {index + " state"} style = {styles.titleContainer}> State:
           </Text>
+          <Text style={styles.warningMessage}>2-letter state code</Text>
           <TextInput
+            maxLength = {2}
+            autoCapitalize={'characters'}
             key = {this.state.registeredState[index] + " state"}
             style = {styles.textInputContainer}
             onChangeText = {(text) => st[index]=text}
@@ -148,6 +153,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 10,
     marginTop: 10,
+  },
+  warningMessage: {
+    color: '#2f4f4f',
+    fontFamily: 'Helvetica',
+    fontSize: 12,
   },
 });
 
