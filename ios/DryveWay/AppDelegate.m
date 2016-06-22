@@ -11,6 +11,7 @@
 #import "RCTRootView.h"
 #import "RCTPushNotificationManager.h"
 
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -56,7 +57,6 @@
   [self.window makeKeyAndVisible];
   return YES;
 }
-
 // Required to register for notifications
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
 {

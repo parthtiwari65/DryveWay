@@ -4,7 +4,8 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput
+  TextInput,
+  PushNotificationIOS
 } from 'react-native';
 var Button = require('./Button');
 var Parse = require('parse/react-native');
@@ -65,8 +66,13 @@ class Signup extends Component {
     );
   }
 
+  PushNotificationIOS.addEventListener(‘register’, function(token){
+   console.log(‘You are registered and the device token is: ‘,token)
+  })
+
   onSubmitPress() {
     this.setState({errorMessage: "Loading..."})
+    PushNotificationIOS.requestPermissions();
     if (this.state.username.trim().length == 0) {
       this.setState({
         username: '',
