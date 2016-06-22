@@ -8,10 +8,9 @@ import {
   Image,
   TouchableHighlight
 } from 'react-native';
-
 var sendbird = require('sendbird');
 var PULLDOWN_DISTANCE = 40;
-
+var _isMounted = true;
 class Messages extends Component {
 
   constructor(props) {
@@ -23,38 +22,46 @@ class Messages extends Component {
       channelName: ''
     };
   }
+  componentWillUnmount() {
+    _isMounted = false;
+  }
   componentWillMount() {
-        sendbird.connect({
+    _isMounted = true;
+      sendbird.connect({
         successFunc: (data) => {
           this.getChannelList();
         },
         errorFunc: (status, error) => {
           console.log(status, error);
         }
-        });
+      });
       sendbird.events.onMessagingChannelUpdateReceived = (obj) => {
         var _add = true;
         this.state.channelList.forEach((channel, index) => {
           if (channel.channel_url == obj.channel.channel_url) {
-            _add = false;
-            var _channelList = this.state.channelList;
-            _channelList[index] = this.makeChannelListView(obj);
-            this.setState({channelList: _channelList}, () => {
-              var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-              this.setState({dataSource: ds.cloneWithRows(this.state.channelList)}, () => {return;});
-            });
+              _add = false;
+              var _channelList = this.state.channelList;
+              _channelList[index] = this.makeChannelListView(obj);
+              if(_isMounted) {
+                this.setState({channelList: _channelList}, () => {
+                  var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+                  this.setState({dataSource: ds.cloneWithRows(this.state.channelList)}, () => {return;});
+                });
+              }
           }
         });
 
         if (_add) {
-          var _channelList = this.state.channelList;
-          _channelList.push(this.makeChannelListView(obj));
-          this.setState({channelList: _channelList}, () => {
-            var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-            this.setState({dataSource: ds.cloneWithRows(this.state.channelList)});
-          });
+            var _channelList = this.state.channelList;
+            _channelList.push(this.makeChannelListView(obj));
+            if(_isMounted) {
+              this.setState({channelList: _channelList}, () => {
+                var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+                this.setState({dataSource: ds.cloneWithRows(this.state.channelList)});
+              });
+            }
         }
-      };
+      }
   }
   onChannelPress(url) {
     sendbird.joinMessagingChannel(
@@ -81,9 +88,11 @@ class Messages extends Component {
       successFunc : (data) => {
         var _channelLst = [];
         data.channels.forEach((item, index) => { _channelLst.push(this.makeChannelListView(item)); });
-        this.setState({channelList: this.state.channelList.concat(_channelLst)}, () => {
-          this.setState({dataSource: this.state.dataSource.cloneWithRows(this.state.channelList)});
-        });
+        if(_isMounted) {
+          this.setState({channelList: this.state.channelList.concat(_channelLst)}, () => {
+            this.setState({dataSource: this.state.dataSource.cloneWithRows(this.state.channelList)});
+          });
+        }
       },
       errorFunc: (status, error) => {
         console.log(status, error);
