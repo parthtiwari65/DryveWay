@@ -22,6 +22,14 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		244348981D1B359B00678202 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 244348921D1B357900678202 /* libRCTPushNotification.a */; };
+		24FB2EA91D1B57600009D961 /* SendBirdSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24FB2EA81D1B57600009D961 /* SendBirdSDK.framework */; };
+		24FB2EAB1D1B57CE0009D961 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24FB2EAA1D1B57CE0009D961 /* MobileCoreServices.framework */; };
+		24FB2EAD1D1B57D80009D961 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24FB2EAC1D1B57D80009D961 /* Foundation.framework */; };
+		24FB2EAF1D1B57E10009D961 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24FB2EAE1D1B57E10009D961 /* Security.framework */; };
+		24FB2EB11D1B57E90009D961 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24FB2EB01D1B57E80009D961 /* CFNetwork.framework */; };
+		24FB2EB31D1B57F80009D961 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24FB2EB21D1B57F80009D961 /* QuartzCore.framework */; };
+		24FB2EB51D1B57FF0009D961 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24FB2EB41D1B57FF0009D961 /* AdSupport.framework */; };
+		24FB2EB71D1B58160009D961 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 24FB2EB61D1B58160009D961 /* libicucore.tbd */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 /* End PBXBuildFile section */
 
@@ -133,6 +141,14 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = DryveWay/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		244348881D1B357900678202 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
+		24FB2EA81D1B57600009D961 /* SendBirdSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SendBirdSDK.framework; sourceTree = "<group>"; };
+		24FB2EAA1D1B57CE0009D961 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		24FB2EAC1D1B57D80009D961 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		24FB2EAE1D1B57E10009D961 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		24FB2EB01D1B57E80009D961 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		24FB2EB21D1B57F80009D961 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		24FB2EB41D1B57FF0009D961 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		24FB2EB61D1B58160009D961 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -149,8 +165,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24FB2EB71D1B58160009D961 /* libicucore.tbd in Frameworks */,
+				24FB2EB51D1B57FF0009D961 /* AdSupport.framework in Frameworks */,
+				24FB2EB31D1B57F80009D961 /* QuartzCore.framework in Frameworks */,
+				24FB2EB11D1B57E90009D961 /* CFNetwork.framework in Frameworks */,
+				24FB2EAF1D1B57E10009D961 /* Security.framework in Frameworks */,
+				24FB2EAD1D1B57D80009D961 /* Foundation.framework in Frameworks */,
+				24FB2EAB1D1B57CE0009D961 /* MobileCoreServices.framework in Frameworks */,
 				244348981D1B359B00678202 /* libRCTPushNotification.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
+				24FB2EA91D1B57600009D961 /* SendBirdSDK.framework in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
@@ -269,6 +293,21 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		24FB2E9C1D1B574B0009D961 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				24FB2EB61D1B58160009D961 /* libicucore.tbd */,
+				24FB2EB41D1B57FF0009D961 /* AdSupport.framework */,
+				24FB2EB21D1B57F80009D961 /* QuartzCore.framework */,
+				24FB2EB01D1B57E80009D961 /* CFNetwork.framework */,
+				24FB2EAE1D1B57E10009D961 /* Security.framework */,
+				24FB2EAC1D1B57D80009D961 /* Foundation.framework */,
+				24FB2EAA1D1B57CE0009D961 /* MobileCoreServices.framework */,
+				24FB2EA81D1B57600009D961 /* SendBirdSDK.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -306,6 +345,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				24FB2E9C1D1B574B0009D961 /* Frameworks */,
 				13B07FAE1A68108700A75B9A /* DryveWay */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* DryveWayTests */,
@@ -644,6 +684,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEAD_CODE_STRIPPING = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -668,6 +712,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,

@@ -5,7 +5,8 @@ import {
   Text,
   View,
   TextInput,
-  PushNotificationIOS
+  PushNotificationIOS,
+  Platform
 } from 'react-native';
 var Button = require('./Button');
 var Parse = require('parse/react-native');
@@ -23,6 +24,33 @@ class Signup extends Component {
       confirmPassword: "",
       errorMessage: ""
     };
+  }
+
+  componentWillMount() {
+    if (Platform.OS === 'ios') {
+      // Add listener for push notifications
+        PushNotificationIOS.addEventListener('notification', this._onNotification);
+        // Add listener for local notifications
+        PushNotificationIOS.addEventListener('localNotification', this._onLocalNotification);
+    }
+  }
+  componentWillUnmount() {
+    if (Platform.OS === 'ios') {
+        // Remove listener for push notifications
+        PushNotificationIOS.removeEventListener('notification', this._onNotification);
+        // Remove listener for local notifications
+        PushNotificationIOS.removeEventListener('localNotification', this._onLocalNotification);
+    }
+  }
+    _onNotification(notification) {
+    AlertIOS.alert(
+      'Push Notification Received',
+      'Alert message: ' + notification.getMessage(),
+      [{
+        text: 'Dismiss',
+        onPress: null,
+      }]
+    );
   }
 
   render() {
@@ -66,13 +94,12 @@ class Signup extends Component {
     );
   }
 
-  PushNotificationIOS.addEventListener(‘register’, function(token){
-   console.log(‘You are registered and the device token is: ‘,token)
-  })
-
   onSubmitPress() {
     this.setState({errorMessage: "Loading..."})
-    PushNotificationIOS.requestPermissions();
+    if (Platform.OS === 'ios') {
+      PushNotificationIOS.requestPermissions();
+    }
+
     if (this.state.username.trim().length == 0) {
       this.setState({
         username: '',
