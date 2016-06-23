@@ -26,33 +26,6 @@ class Signup extends Component {
     };
   }
 
-  componentWillMount() {
-    if (Platform.OS === 'ios') {
-      // Add listener for push notifications
-        PushNotificationIOS.addEventListener('notification', this._onNotification);
-        // Add listener for local notifications
-        PushNotificationIOS.addEventListener('localNotification', this._onLocalNotification);
-    }
-  }
-  componentWillUnmount() {
-    if (Platform.OS === 'ios') {
-        // Remove listener for push notifications
-        PushNotificationIOS.removeEventListener('notification', this._onNotification);
-        // Remove listener for local notifications
-        PushNotificationIOS.removeEventListener('localNotification', this._onLocalNotification);
-    }
-  }
-    _onNotification(notification) {
-    AlertIOS.alert(
-      'Push Notification Received',
-      'Alert message: ' + notification.getMessage(),
-      [{
-        text: 'Dismiss',
-        onPress: null,
-      }]
-    );
-  }
-
   render() {
     const { page } = this.state;
     return (
@@ -96,9 +69,7 @@ class Signup extends Component {
 
   onSubmitPress() {
     this.setState({errorMessage: "Loading..."})
-    if (Platform.OS === 'ios') {
-      PushNotificationIOS.requestPermissions();
-    }
+
 
     if (this.state.username.trim().length == 0) {
       this.setState({

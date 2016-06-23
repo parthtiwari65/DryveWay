@@ -7,11 +7,16 @@ import {
   TouchableHighlight,
   StyleSheet,
   Dimensions,
-  ScrollView
+  ScrollView,
+  Animated,
+  DeviceEventEmitter
 } from 'react-native';
+import Keyboard from 'Keyboard';
 
 var sendbird = require('sendbird');
 var windowSize = Dimensions.get('window');
+var _keyboardWillShowSubscription;
+var _keyboardWillHideSubscription ;
 
 class Chat extends Component {
 
@@ -19,7 +24,8 @@ class Chat extends Component {
     super(props);
       this.state = {
         message: '',
-         messageList: []
+         messageList: [],
+         keyboardOffset: new Animated.Value(0),
       };
   }
   componentWillMount() {
@@ -27,6 +33,13 @@ class Chat extends Component {
       this.setState({messageList: this.state.messageList.concat([obj])});
     };
     this.getMessages();
+
+    _keyboardWillShowSubscription = Keyboard.addListener('keyboardWillShow', (e) => this._keyboardWillShow(e));
+    _keyboardWillHideSubscription = Keyboard.addListener('keyboardWillHide', (e) => this._keyboardWillHide(e));
+  }
+  componentWillUnmount() {
+    _keyboardWillShowSubscription.remove();
+    _keyboardWillHideSubscription.remove();
   }
   getMessages() {
     sendbird.getMessageLoadMore({
@@ -51,6 +64,18 @@ class Chat extends Component {
   onSendPress() {
     sendbird.message(this.state.message);
     this.setState({message: ''});
+  }
+  _keyboardWillShow(e) {
+    Animated.spring(this.state.keyboardOffset, {
+      toValue: e.endCoordinates.height,
+      friction: 6
+    }).start();
+  }
+  _keyboardWillHide(e) {
+    Animated.spring(this.state.keyboardOffset, {
+      toValue: 0,
+      friction: 6
+    }).start();
   }
   render() {
     var list = this.state.messageList.map((item, index) => {
@@ -88,24 +113,35 @@ class Chat extends Component {
           </ScrollView>
         </View>
         <View style={styles.inputContainer}>
+
           <View style={styles.textContainer}>
-            <TextInput
-              style={styles.input}
-              value={this.state.message}
-              onChangeText={(text) => this.setState({message: text})}
-              />
-          </View>
-          <View style={styles.sendContainer}>
-            <TouchableHighlight
-              underlayColor={'#4e4273'}
-              onPress={this.onSendPress.bind(this)}
-              >
-              <Text style={styles.sendLabel}>SEND</Text>
-            </TouchableHighlight>
+                <TextInput
+                  style={styles.input}
+                  value={this.state.message}
+                  onChangeText={(text) => this.setState({message: text})}
+                  />
+              </View>
+              <View style={styles.sendContainer}>
+                <TouchableHighlight
+                  underlayColor={'#4e4273'}
+                  onPress={this.onSendPress.bind(this)}
+                  >
+                  <Text style={styles.sendLabel}>SEND</Text>
+                </TouchableHighlight>
           </View>
         </View>
       </View>
     );
+  }
+  inputFocused (refName) {
+    setTimeout(() => {
+      let scrollResponder = this.refs.scrollView.getScrollResponder();
+      scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
+        React.findNodeHandle(this.refs[refName]),
+        110, //additionalOffset
+        true
+      );
+    }, 50);
   }
 }
 

@@ -22,9 +22,7 @@ class Messages extends Component {
       channelName: ''
     };
   }
-  componentWillUnmount() {
-    _isMounted = false;
-  }
+
   componentWillMount() {
     _isMounted = true;
       sendbird.connect({
@@ -50,7 +48,6 @@ class Messages extends Component {
               }
           }
         });
-
         if (_add) {
             var _channelList = this.state.channelList;
             _channelList.push(this.makeChannelListView(obj));
@@ -63,6 +60,10 @@ class Messages extends Component {
         }
       }
   }
+  componentWillUnmount() {
+    _isMounted = false;
+  }
+
   onChannelPress(url) {
     sendbird.joinMessagingChannel(
       url,

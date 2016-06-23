@@ -4,7 +4,10 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput
+  TextInput,
+  Alert,
+  PushNotificationIOS,
+  Platform
 } from 'react-native';
 var Button = require('./Button');
 var VerifyThings = require('./VerifyThings');
@@ -27,6 +30,12 @@ class Contact extends Component {
     };
   }
   componentWillMount() {
+    if (Platform.OS === 'ios') {
+      // Add listener for push notifications
+        PushNotificationIOS.requestPermissions();
+        PushNotificationIOS.addEventListener('notification', this._onNotification);
+        console.log("push listener registered");
+    }
     var currentUser = Parse.User.current();
     var userJSON = JSON.stringify(currentUser);
     var userinfo = eval ("(" + userJSON + ")");
@@ -48,7 +57,28 @@ class Contact extends Component {
       }
     });
   }
-
+  componentWillUnmount() {
+    if (Platform.OS === 'ios') {
+          PushNotificationIOS.checkPermissions((permissions) => {
+          console.log("Push permissions",permissions);
+        });
+        // Remove listener for push notifications
+        PushNotificationIOS.removeEventListener('notification', this._onNotification);
+        // Remove listener for local notifications
+        PushNotificationIOS.removeEventListener('localNotification', this._onLocalNotification);
+        console.log("push listener removed");
+    }
+  }
+  _onNotification(notification) {
+    Alert.alert(
+      'Push Notification Received',
+      'Alert message: ' + notification.getMessage(),
+      [{
+        text: 'Dismiss',
+        onPress: null,
+      }]
+    );
+  }
   render() {
     const { page } = this.state;
     if(this.state.successMessage == "Yay! This vehicle is registered with us :D") {
@@ -78,11 +108,21 @@ class Contact extends Component {
                   value={this.state.carState}/>
             <Text style={styles.succesMessageStyle}>{this.state.successMessage}</Text>
             <Button text="Check availability" onPress={this.onCheckPress.bind(this)}/>
+            <Button text="Send Push" onPress={this.sendPush.bind(this)}/>
             {contactButton}
         </View>
     );
   }
-
+  sendPush() {
+      require('RCTDeviceEventEmitter').emit('remoteNotificationReceived', {
+        aps: {
+      alert: 'Sample notification',
+      badge: '+1',
+      sound: 'default',
+      category: 'REACT_NATIVE'
+    },
+    });
+  }
   onContactPress() {
     var guestIds =[];
     guestIds.push(this.state.currentUserName);
@@ -112,6 +152,7 @@ class Contact extends Component {
       }
     );
   }
+
 
   onCheckPress() {
     this.setState({

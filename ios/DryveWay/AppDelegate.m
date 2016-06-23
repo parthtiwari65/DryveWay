@@ -69,9 +69,16 @@
   [RCTPushNotificationManager didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
 // Required for the notification event.
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification
-{
-  [RCTPushNotificationManager didReceiveRemoteNotification:notification];
+/*- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification
+ {
+ [RCTPushNotificationManager didReceiveRemoteNotification:notification];
+ }*/
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler{
+  [RCTPushNotificationManager didReceiveRemoteNotification:userInfo];
+  NSString *alertMsg = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
+  NSDictionary *payload = [userInfo objectForKey:@"sendbird"];
+  // Your custom way to parse data
+  completionHandler(UIBackgroundFetchResultNewData);
 }
 // Required for the localNotification event.
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
