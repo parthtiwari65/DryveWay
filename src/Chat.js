@@ -70,6 +70,7 @@ class Chat extends Component {
       );
     });
     return (
+      <KeyboardAwareScrollView contentContainerStyle={styles.keyboardScroll}>
       <View style={styles.container}>
         <View style={styles.topContainer}>
           <TouchableHighlight
@@ -90,7 +91,6 @@ class Chat extends Component {
           {list}
           </ScrollView>
         </View>
-
           <View style={styles.inputContainer}>
               <View style={styles.textContainer}>
                   <TextInput
@@ -109,11 +109,18 @@ class Chat extends Component {
                 </View>
           </View>
       </View>
+      </KeyboardAwareScrollView>
     );
   }
 }
 
 var styles = StyleSheet.create({
+    keyboardScroll: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'stretch',
+      backgroundColor: '#F5FCFF',
+    },
     container: {
       flex: 1,
       justifyContent: 'center',
