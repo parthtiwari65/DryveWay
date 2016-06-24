@@ -9,11 +9,13 @@ import {
   PushNotificationIOS,
   Platform
 } from 'react-native';
+
 var Button = require('./Button');
 var VerifyThings = require('./VerifyThings');
 var Parse = require('parse/react-native');
 var sendbird = require('sendbird');
 var appId = '6662716B-F212-4E6A-873F-7C676F7ADC4E';
+
 //6662716B-F212-4E6A-873F-7C676F7ADC4E
 //A7A2672C-AD11-11E4-8DAA-0A18B21C2D82
 class Contact extends Component {
@@ -108,7 +110,6 @@ class Contact extends Component {
                   value={this.state.carState}/>
             <Text style={styles.succesMessageStyle}>{this.state.successMessage}</Text>
             <Button text="Check availability" onPress={this.onCheckPress.bind(this)}/>
-            <Button text="Send Push" onPress={this.sendPush.bind(this)}/>
             {contactButton}
         </View>
     );

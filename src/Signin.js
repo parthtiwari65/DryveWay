@@ -6,6 +6,7 @@ import {
   View,
   TextInput
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 var Button = require('./Button');
 var Parse = require('parse/react-native');
 
@@ -26,10 +27,10 @@ class Signin extends Component {
       <View style={styles.container}>
       <Text style={[styles.titleContainer, {marginBottom: 30}]}> Please log in here </Text>
       <Text style={styles.titleContainer}> Username: </Text>
-      <TextInput
-        style={styles.textInputContainer}
-        onChangeText={(text) => this.setState({username: text})}
-        value={this.state.username}/>
+          <TextInput
+            style={styles.textInputContainer}
+            onChangeText={(text) => this.setState({username: text})}
+            value={this.state.username}/>
       <Text style={styles.titleContainer}> Password: </Text>
       <TextInput
         style={styles.textInputContainer}

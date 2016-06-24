@@ -205,13 +205,13 @@ var styles = StyleSheet.create({
     justifyContent: 'flex-start'
   },
   titleLabel: {
-    fontSize: 14,
+    fontSize: 18,
     fontWeight: '600',
     fontFamily: 'Helvetica',
     color: '#60768b',
   },
   memberLabel: {
-    fontSize: 14,
+    fontSize: 18,
     fontWeight: '400',
     fontFamily: 'Helvetica',
     color: '#abb8c4',

@@ -9,7 +9,8 @@
     "layer-websdk": "^1.0.4",
     "parse": "^1.8.5",
     "react": "^15.1.0",
-    "react-native": "^0.27.0-rc2",
+    "react-native": "^0.28.0",
+    "react-native-keyboard-aware-scroll-view": "^0.1.2",
     "react-native-tabs": "^1.0.7"
   }
 }

@@ -8,15 +8,12 @@ import {
   StyleSheet,
   Dimensions,
   ScrollView,
-  Animated,
-  DeviceEventEmitter
 } from 'react-native';
-import Keyboard from 'Keyboard';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 
 var sendbird = require('sendbird');
 var windowSize = Dimensions.get('window');
-var _keyboardWillShowSubscription;
-var _keyboardWillHideSubscription ;
 
 class Chat extends Component {
 
@@ -24,8 +21,7 @@ class Chat extends Component {
     super(props);
       this.state = {
         message: '',
-         messageList: [],
-         keyboardOffset: new Animated.Value(0),
+         messageList: []
       };
   }
   componentWillMount() {
@@ -33,14 +29,8 @@ class Chat extends Component {
       this.setState({messageList: this.state.messageList.concat([obj])});
     };
     this.getMessages();
+  }
 
-    _keyboardWillShowSubscription = Keyboard.addListener('keyboardWillShow', (e) => this._keyboardWillShow(e));
-    _keyboardWillHideSubscription = Keyboard.addListener('keyboardWillHide', (e) => this._keyboardWillHide(e));
-  }
-  componentWillUnmount() {
-    _keyboardWillShowSubscription.remove();
-    _keyboardWillHideSubscription.remove();
-  }
   getMessages() {
     sendbird.getMessageLoadMore({
       limit: 100,
@@ -65,18 +55,6 @@ class Chat extends Component {
     sendbird.message(this.state.message);
     this.setState({message: ''});
   }
-  _keyboardWillShow(e) {
-    Animated.spring(this.state.keyboardOffset, {
-      toValue: e.endCoordinates.height,
-      friction: 6
-    }).start();
-  }
-  _keyboardWillHide(e) {
-    Animated.spring(this.state.keyboardOffset, {
-      toValue: 0,
-      friction: 6
-    }).start();
-  }
   render() {
     var list = this.state.messageList.map((item, index) => {
       return (
@@ -84,7 +62,7 @@ class Chat extends Component {
           style={styles.messageContainer}
           key={index}
           >
-          <Text style={this.nameLabel}>
+          <Text style={styles.nameLabel}>
             {item.user.name}
             <Text style={styles.messageLabel}> : {item.message}</Text>
           </Text>
@@ -99,7 +77,7 @@ class Chat extends Component {
             onPress={this.onBackPress.bind(this)}
             style={{marginLeft: 15}}
             >
-            <Text style={{color: '#000000'}}>&lt; Back</Text>
+            <Text style={styles.backLabel}>&lt; Back</Text>
           </TouchableHighlight>
         </View>
         <View style={styles.chatContainer}>
@@ -112,36 +90,26 @@ class Chat extends Component {
           {list}
           </ScrollView>
         </View>
-        <View style={styles.inputContainer}>
 
-          <View style={styles.textContainer}>
-                <TextInput
-                  style={styles.input}
-                  value={this.state.message}
-                  onChangeText={(text) => this.setState({message: text})}
-                  />
-              </View>
-              <View style={styles.sendContainer}>
-                <TouchableHighlight
-                  underlayColor={'#4e4273'}
-                  onPress={this.onSendPress.bind(this)}
-                  >
-                  <Text style={styles.sendLabel}>SEND</Text>
-                </TouchableHighlight>
+          <View style={styles.inputContainer}>
+              <View style={styles.textContainer}>
+                  <TextInput
+                    style={styles.input}
+                    value={this.state.message}
+                    onChangeText={(text) => this.setState({message: text})}
+                    />
+                </View>
+                <View style={styles.sendContainer}>
+                  <TouchableHighlight
+                    underlayColor={'#4e4273'}
+                    onPress={this.onSendPress.bind(this)}
+                    >
+                    <Text style={styles.sendLabel}>SEND</Text>
+                  </TouchableHighlight>
+                </View>
           </View>
-        </View>
       </View>
     );
-  }
-  inputFocused (refName) {
-    setTimeout(() => {
-      let scrollResponder = this.refs.scrollView.getScrollResponder();
-      scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
-        React.findNodeHandle(this.refs[refName]),
-        110, //additionalOffset
-        true
-      );
-    }, 50);
   }
 }
 
@@ -182,7 +150,23 @@ var styles = StyleSheet.create({
     },
     sendLabel: {
       color: '#000000',
-      fontSize: 15,
+      fontSize: 18,
+      fontFamily: 'Helvetica',
+    },
+    nameLabel: {
+      flex: 1,
+      fontSize: 19,
+      fontWeight: '600',
+      color: '#333e4a'
+    },
+    messageLabel: {
+      fontSize: 18,
+      fontWeight: '400',
+      color: '#60768b'
+    },
+    backLabel: {
+      color: '#000000',
+      fontSize: 18,
       fontFamily: 'Helvetica',
     },
     input: {
