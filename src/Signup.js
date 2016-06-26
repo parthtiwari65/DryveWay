@@ -122,7 +122,6 @@ class Signup extends Component {
       access_token: "",
       successFunc: (data) => {
         this.setState({errorMessage: "Messaging registered, logging in.."})
-        console.log("chat registered")
       },
       errorFunc: (status, error) => {
         this.setState({

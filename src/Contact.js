@@ -36,13 +36,11 @@ class Contact extends Component {
       // Add listener for push notifications
         PushNotificationIOS.requestPermissions();
         PushNotificationIOS.addEventListener('notification', this._onNotification);
-        console.log("push listener registered");
     }
     var currentUser = Parse.User.current();
     var userJSON = JSON.stringify(currentUser);
     var userinfo = eval ("(" + userJSON + ")");
     this.setState({currentUserName: userinfo.username});
-    console.log("User:" + userinfo.username)
     sendbird.init({
       app_id: appId,
       guest_id: userinfo.username,
@@ -51,7 +49,6 @@ class Contact extends Component {
       access_token: "",
       successFunc: (data) => {
         this.setState({errorMessage: "Messaging registered, logging in.."})
-        console.log("chat registered")
       },
       errorFunc: (status, error) => {
         this.setState({errorMessage: "Failed to register messaging, try again later.."})
@@ -62,13 +59,11 @@ class Contact extends Component {
   componentWillUnmount() {
     if (Platform.OS === 'ios') {
           PushNotificationIOS.checkPermissions((permissions) => {
-          console.log("Push permissions",permissions);
         });
         // Remove listener for push notifications
         PushNotificationIOS.removeEventListener('notification', this._onNotification);
         // Remove listener for local notifications
         PushNotificationIOS.removeEventListener('localNotification', this._onLocalNotification);
-        console.log("push listener removed");
     }
   }
   _onNotification(notification) {
@@ -132,10 +127,8 @@ class Contact extends Component {
       guestIds,
       {
         "successFunc" : (data) => {
-          console.log("1. Success:"+ data);
           sendbird.connect({
             "successFunc" : (data) => {
-              console.log("2. Success:" + data);
               // do something
                 this.props.navigator.push({name: 'chat'});
               },

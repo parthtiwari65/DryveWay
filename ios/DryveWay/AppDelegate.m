@@ -67,6 +67,7 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
   [RCTPushNotificationManager didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+  [SendBird registerForRemoteNotifications:deviceToken];
 }
 // Required for the notification event.
 /*- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification
