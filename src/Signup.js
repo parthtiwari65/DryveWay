@@ -8,6 +8,7 @@ import {
   PushNotificationIOS,
   Platform
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 var Button = require('./Button');
 var Parse = require('parse/react-native');
 var sendbird = require('sendbird');
@@ -29,6 +30,7 @@ class Signup extends Component {
   render() {
     const { page } = this.state;
     return (
+      <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <View style={styles.container}>
         <Text style={[styles.titleContainer, {marginBottom: 30}]}> Please register here </Text>
         <Text style={styles.titleContainer}> Email: </Text>
@@ -64,6 +66,7 @@ class Signup extends Component {
         <Button text="I have an account"
                   onPress={this.onAlreadyPress.bind(this)}/>
       </View>
+      </KeyboardAwareScrollView>
     );
   }
 

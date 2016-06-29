@@ -6,6 +6,7 @@ import {
   View,
   TextInput
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 var Button = require('./Button');
 var Parse = require('parse/react-native');
 var VerifyThings = require('./VerifyThings');
@@ -61,6 +62,7 @@ class CarReg extends Component {
       }
 
     return (
+      <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <View style={styles.container}>
         <Text
           style={[styles.titleContainer, {marginBottom: 30}]}>
@@ -88,6 +90,7 @@ class CarReg extends Component {
         <Button text="Submit" onPress={this.onSubmitPress.bind(this)}/>
         <Button text="I don't have a vehicle" onPress={this.onNoCarPress.bind(this)}/>
       </View>
+      </KeyboardAwareScrollView>
     );
   }
   onAddCarPress() {

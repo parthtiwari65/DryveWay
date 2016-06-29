@@ -35,7 +35,14 @@ class Contact extends Component {
     if (Platform.OS === 'ios') {
       // Add listener for push notifications
         PushNotificationIOS.requestPermissions();
-        PushNotificationIOS.addEventListener('notification', this._onNotification);
+        PushNotificationIOS.addEventListener('register', function(token){
+         console.log('You are registered and the device token is: ',token)
+        });
+        PushNotificationIOS.addEventListener('notification', function(notification){
+         console.log('You have received a new notification!', notification);
+         Alert.alert('Push Notification Received')
+        });
+        //PushNotificationIOS.addEventListener('notification', this._onNotification);
     }
     var currentUser = Parse.User.current();
     var userJSON = JSON.stringify(currentUser);
