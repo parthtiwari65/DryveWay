@@ -63,6 +63,16 @@ class Messages extends Component {
   componentWillUnmount() {
     _isMounted = false;
   }
+  sendPush() {
+      require('RCTDeviceEventEmitter').emit('remoteNotificationReceived', {
+        aps: {
+      alert: 'Sample notification',
+      badge: '+1',
+      sound: 'default',
+      category: 'REACT_NATIVE'
+    },
+    });
+  }
 
   onChannelPress(url) {
     sendbird.joinMessagingChannel(
