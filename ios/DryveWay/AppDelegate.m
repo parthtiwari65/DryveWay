@@ -17,6 +17,17 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  NSString *APP_ID = @"6662716B-F212-4E6A-873F-7C676F7ADC4E"; // You could get it from SendBird Dashboard.
+  [SendBird initAppId:APP_ID];
+  
+  if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+    UIUserNotificationSettings* notificationSettings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:notificationSettings];
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
+  } else {
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+  }
+  
   NSURL *jsCodeLocation;
 
   /**

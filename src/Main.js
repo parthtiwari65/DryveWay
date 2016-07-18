@@ -9,7 +9,9 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  PushNotificationIOS,
+  Platform
 } from 'react-native';
 import Tabs from 'react-native-tabs';
 var Profile = require('./Profile');
@@ -23,6 +25,30 @@ class Main extends Component {
     this.state = {
       page: Contact
     };
+  }
+  componentWillMount() {
+    if (Platform.OS === 'ios') {
+      // Add listener for push notifications
+        PushNotificationIOS.requestPermissions();
+        PushNotificationIOS.addEventListener('register', function(token){
+         console.log('You are registered and the device token is: ',token)
+        });
+        PushNotificationIOS.addEventListener('notification', function(notification){
+         console.log('You have received a new notification!', notification);
+         Alert.alert('Push Notification Received')
+        });
+        //PushNotificationIOS.addEventListener('notification', this._onNotification);
+    }
+  }
+  _onNotification(notification) {
+    Alert.alert(
+      'Push Notification Received',
+      'Alert message: ' + notification.getMessage(),
+      [{
+        text: 'Dismiss',
+        onPress: null,
+      }]
+    );
   }
 
   render() {

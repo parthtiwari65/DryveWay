@@ -32,18 +32,6 @@ class Contact extends Component {
     };
   }
   componentWillMount() {
-    if (Platform.OS === 'ios') {
-      // Add listener for push notifications
-        PushNotificationIOS.requestPermissions();
-        PushNotificationIOS.addEventListener('register', function(token){
-         console.log('You are registered and the device token is: ',token)
-        });
-        PushNotificationIOS.addEventListener('notification', function(notification){
-         console.log('You have received a new notification!', notification);
-         Alert.alert('Push Notification Received')
-        });
-        //PushNotificationIOS.addEventListener('notification', this._onNotification);
-    }
     var currentUser = Parse.User.current();
     var userJSON = JSON.stringify(currentUser);
     var userinfo = eval ("(" + userJSON + ")");
@@ -64,25 +52,14 @@ class Contact extends Component {
     });
   }
   componentWillUnmount() {
-    if (Platform.OS === 'ios') {
-          PushNotificationIOS.checkPermissions((permissions) => {
-        });
-        // Remove listener for push notifications
-        PushNotificationIOS.removeEventListener('notification', this._onNotification);
-        // Remove listener for local notifications
-        PushNotificationIOS.removeEventListener('localNotification', this._onLocalNotification);
-    }
+    // if (Platform.OS === 'ios') {
+    //       PushNotificationIOS.checkPermissions((permissions) => {
+    //     });
+    //     // Remove listener for push notifications
+    //     PushNotificationIOS.removeEventListener('notification', this._onNotification);
+    // }
   }
-  _onNotification(notification) {
-    Alert.alert(
-      'Push Notification Received',
-      'Alert message: ' + notification.getMessage(),
-      [{
-        text: 'Dismiss',
-        onPress: null,
-      }]
-    );
-  }
+
   render() {
     const { page } = this.state;
     if(this.state.successMessage == "Yay! This vehicle is registered with us :D") {
@@ -153,7 +130,6 @@ class Contact extends Component {
       }
     );
   }
-
 
   onCheckPress() {
     this.setState({
